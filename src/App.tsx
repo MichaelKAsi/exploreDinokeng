@@ -59,7 +59,7 @@ function App() {
 
           <div className="rounded-2xl overflow-hidden shadow-2xl">
             <img
-              src="https://bentlys.co.za/wp-content/uploads/2025/10/Bentlys-Masterplan-draft-scaled.png"
+              src="https://bentlys.co.za/wp-content/uploads/2025/10/Bentlys-Masterplan-draft-scaled.webp"
               alt="Walking Trail Map"
               className="w-full h-auto"
             />
