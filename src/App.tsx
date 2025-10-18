@@ -224,7 +224,7 @@ function App() {
             </div>
 
             <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/1537635/pexels-photo-1537635.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
+              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://bentlys.co.za/wp-content/uploads/2024/01/WhatsApp-Image-2024-01-22-at-19.52.10.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-3">
                   <UtensilsCrossed className="w-6 h-6 text-emerald-600" />
