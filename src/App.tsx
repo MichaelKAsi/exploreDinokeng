@@ -185,10 +185,14 @@ function App() {
                 <p className="text-stone-600 mb-6 leading-relaxed">
                   Shop local produce, souvenirs, and everyday essentials without leaving the property.
                 </p>
-                <button className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group">
-                  Visit Store
+                <a
+                  href="https://shop-bentlys.netlify.app/"
+                  rel="noopener noreferrer"
+                  className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group"
+                >
+                  Shop Now
                   <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-                </button>
+                </a>
               </div>
             </div>
 
