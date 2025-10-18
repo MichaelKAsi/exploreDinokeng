@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import { Mountain, ShoppingBag, Map, Bike, UtensilsCrossed, Sparkles, ArrowDown } from 'lucide-react';
+import { Mountain, ShoppingBag, Map, Bike, UtensilsCrossed, Sparkles, ArrowDown, Download, X } from 'lucide-react';
 
 function App() {
   const [email, setEmail] = useState('');
   const [showToast, setShowToast] = useState(false);
+  const [isMapFullscreen, setIsMapFullscreen] = useState(false);
+
+  const mapUrl = 'https://bentlys.co.za/wp-content/uploads/2025/10/Bentlys-Masterplan-draft-scaled.webp';
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,6 +19,15 @@ function App() {
 
   const scrollToOffers = () => {
     document.getElementById('offers')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleDownloadMap = () => {
+    const link = document.createElement('a');
+    link.href = mapUrl;
+    link.download = 'Bentlys-Trail-Map.webp';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -57,15 +69,46 @@ function App() {
             </p>
           </div>
 
-          <div className="rounded-2xl overflow-hidden shadow-2xl">
+          <div className="rounded-2xl overflow-hidden shadow-2xl cursor-pointer" onClick={() => setIsMapFullscreen(true)}>
             <img
-              src="https://bentlys.co.za/wp-content/uploads/2025/10/Bentlys-Masterplan-draft-scaled.webp"
+              src={mapUrl}
               alt="Walking Trail Map"
-              className="w-full h-auto"
+              className="w-full h-auto transition-transform duration-300 hover:scale-105"
             />
+          </div>
+
+          <div className="text-center mt-8">
+            <button
+              onClick={handleDownloadMap}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl px-8 py-3 transition-all duration-300 transform hover:scale-105 shadow-md inline-flex items-center gap-2"
+            >
+              <Download className="w-5 h-5" />
+              Download Trail Map
+            </button>
           </div>
         </div>
       </section>
+
+      {isMapFullscreen && (
+        <div
+          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 animate-fadeIn"
+          onClick={() => setIsMapFullscreen(false)}
+        >
+          <button
+            onClick={() => setIsMapFullscreen(false)}
+            className="absolute top-6 right-6 text-white hover:text-emerald-400 transition-colors z-10"
+            aria-label="Close fullscreen"
+          >
+            <X className="w-10 h-10" />
+          </button>
+          <img
+            src={mapUrl}
+            alt="Walking Trail Map Fullscreen"
+            className="max-w-full max-h-full object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
 
       <section id="offers" className="py-20 px-6 bg-emerald-50">
         <div className="max-w-2xl mx-auto text-center">
