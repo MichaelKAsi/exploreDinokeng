@@ -220,7 +220,7 @@ function App() {
                   Hire a bike and explore the property at your own pace — perfect for couples or families.
                 </p>
                 <a
-                  href="https://wa.me/27814121666?text=I%20have%20booked%20at%20Bentlys%20and%20I%20would%20like%20your%20services."
+                  href="https://wa.me/27814121666?text=I%20would%20like%20at%20to%20book%202%20bikes%20for%20Our stay."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group"
