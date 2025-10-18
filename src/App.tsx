@@ -265,8 +265,8 @@ function App() {
 
       <footer className="bg-stone-800 text-stone-300 py-12 px-6">
         <div className="max-w-7xl mx-auto text-center">
-          <p className="text-lg font-serif mb-2">Dinokeng Nature Reserve</p>
-          <p className="text-sm">Where adventure meets tranquility</p>
+          <p className="text-lg font-serif mb-2">Bentlys | Dinokeng | Gauteng | Pretoria </p>
+          <p className="text-sm">Nature. Leisure. Luxury</p>
         </div>
       </footer>
     </div>
