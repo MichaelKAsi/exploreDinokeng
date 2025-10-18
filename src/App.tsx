@@ -43,7 +43,7 @@ function App() {
 
         <div className="relative z-10 text-center text-white px-6 animate-fadeIn">
           <h1 className="text-5xl md:text-7xl font-serif mb-6 leading-tight">
-            Explore Your Surroundings<br />in Dinokeng
+            Discover Bentleys<br />Your Gateway to Dinokeng’s Best Activities
           </h1>
           <p className="text-xl md:text-2xl mb-10 text-stone-100 max-w-2xl mx-auto font-light">
             Adventure, relaxation, and discovery await — right at your doorstep.
