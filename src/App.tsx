@@ -113,7 +113,7 @@ function App() {
       <section id="offers" className="py-20 px-6 bg-emerald-50">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-serif text-stone-800 mb-4">
-            Get 10% Off Your Next Adventure
+            Get 10% Off from our Store
           </h2>
           <p className="text-lg text-stone-600 mb-8">
             Sign up and receive your exclusive coupon instantly.
@@ -137,7 +137,7 @@ function App() {
           </form>
 
           <p className="text-sm text-stone-500 mt-4">
-            We respect your privacy. Unsubscribe anytime.
+            We respect your privacy.
           </p>
         </div>
 
@@ -207,7 +207,7 @@ function App() {
             </div>
 
             <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
+              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://thumbs.dreamstime.com/b/young-inian-boy-riding-bush-mathaithai-mountain-bike-rustenburg-south-africa-%C3%A2%E2%82%AC-october-race-rustenburg-south-africa-84256393.jpg?auto=compress&cs=tinysrgb&w=800')` }} />
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-3">
                   <Bike className="w-6 h-6 text-emerald-600" />
