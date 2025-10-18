@@ -46,7 +46,7 @@ function App() {
             Discover Bentleys<br />Your Gateway to Dinokeng’s Best Activities
           </h1>
           <p className="text-xl md:text-2xl mb-10 text-stone-100 max-w-2xl mx-auto font-light">
-            Adventure, relaxation, and discovery await — right at your doorstep.
+            From scenic walking trails and bike adventures to spa indulgence and picnic escapes — experience the best of nature and comfort at Bentlys.
           </p>
           <button
             onClick={scrollToOffers}
