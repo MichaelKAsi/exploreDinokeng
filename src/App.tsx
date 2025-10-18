@@ -204,7 +204,6 @@ function App() {
                 </p>
                 <a
                   href="https://nearbybentlys.netlify.app"
-                  target="_blank"
                   rel="noopener noreferrer"
                   className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group"
                 >
