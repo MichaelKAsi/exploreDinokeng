@@ -253,10 +253,15 @@ function App() {
                 <p className="text-stone-600 mb-6 leading-relaxed">
                   Unwind with a professional spa treatment brought right to your cabin or deck.
                 </p>
-                <button className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group">
+                <a
+                  href="https://wa.me/27769307944?text=I%20have%20booked%20at%20Bentlys%20and%20I%20would%20like%20your%20services."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group"
+                >
                   Book Now
                   <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-                </button>
+                </a>
               </div>
             </div>
           </div>
