@@ -165,7 +165,10 @@ function App() {
                 <p className="text-stone-600 mb-6 leading-relaxed">
                   Reconnect with nature at Bentlys, where trails wind through the Dinokeng bush.
                 </p>
-                <button className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group">
+                <button
+                  onClick={() => setIsMapFullscreen(true)}
+                  className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group"
+                >
                   Explore Trail
                   <span className="transform group-hover:translate-x-1 transition-transform">→</span>
                 </button>
