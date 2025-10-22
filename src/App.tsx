@@ -5,6 +5,7 @@ function App() {
   const [email, setEmail] = useState('');
   const [showToast, setShowToast] = useState(false);
   const [isMapFullscreen, setIsMapFullscreen] = useState(false);
+  const [showPicnicModal, setShowPicnicModal] = useState(false);
 
   const mapUrl = 'https://bentlys.co.za/wp-content/uploads/2025/10/Bentlys-Masterplan-draft-scaled.webp';
 
@@ -249,7 +250,10 @@ function App() {
                 <p className="text-stone-600 mb-6 leading-relaxed">
                   Enjoy ready-made picnic setups with local snacks, drinks, and scenic spots to relax.
                 </p>
-                <button className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group">
+                <button
+                  onClick={() => setShowPicnicModal(true)}
+                  className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group"
+                >
                   View Packages
                   <span className="transform group-hover:translate-x-1 transition-transform">→</span>
                 </button>
@@ -280,6 +284,131 @@ function App() {
           </div>
         </div>
       </section>
+
+      {showPicnicModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white border-b border-stone-200 px-8 py-6 flex justify-between items-center rounded-t-3xl">
+              <h2 className="text-3xl font-serif text-stone-800">Picnic Packages</h2>
+              <button
+                onClick={() => setShowPicnicModal(false)}
+                className="p-2 hover:bg-stone-100 rounded-full transition-colors"
+              >
+                <X className="w-6 h-6 text-stone-600" />
+              </button>
+            </div>
+
+            <div className="p-8 space-y-6">
+              <div className="bg-emerald-50 rounded-2xl p-6 border-2 border-emerald-200">
+                <h3 className="text-2xl font-serif text-stone-800 mb-2">Standard Picnic Package</h3>
+                <p className="text-lg font-semibold text-emerald-600 mb-4">R450 per couple</p>
+                <ul className="space-y-2 text-stone-600">
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-600 mt-1">•</span>
+                    <span>Picnic blanket and cushions</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-600 mt-1">•</span>
+                    <span>Selection of artisan sandwiches</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-600 mt-1">•</span>
+                    <span>Fresh fruit platter</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-600 mt-1">•</span>
+                    <span>Bottled water and juice</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-600 mt-1">•</span>
+                    <span>Sweet treats (cookies or brownies)</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-amber-50 rounded-2xl p-6 border-2 border-amber-200">
+                <h3 className="text-2xl font-serif text-stone-800 mb-2">Deluxe Picnic Package</h3>
+                <p className="text-lg font-semibold text-amber-600 mb-4">R750 per couple</p>
+                <ul className="space-y-2 text-stone-600">
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-600 mt-1">•</span>
+                    <span>Premium picnic setup with decorations</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-600 mt-1">•</span>
+                    <span>Gourmet cheese and charcuterie board</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-600 mt-1">•</span>
+                    <span>Artisan sandwiches and wraps</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-600 mt-1">•</span>
+                    <span>Fresh fruit and vegetable platter</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-600 mt-1">•</span>
+                    <span>Sparkling wine or champagne</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-600 mt-1">•</span>
+                    <span>Premium desserts</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-600 mt-1">•</span>
+                    <span>Personalized setup at your chosen scenic spot</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-stone-50 rounded-2xl p-6 border-2 border-stone-200">
+                <h3 className="text-2xl font-serif text-stone-800 mb-2">Romantic Sunset Package</h3>
+                <p className="text-lg font-semibold text-stone-600 mb-4">R950 per couple</p>
+                <ul className="space-y-2 text-stone-600">
+                  <li className="flex items-start gap-2">
+                    <span className="text-stone-600 mt-1">•</span>
+                    <span>Everything from the Deluxe Package</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-stone-600 mt-1">•</span>
+                    <span>Fairy lights and candles for ambiance</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-stone-600 mt-1">•</span>
+                    <span>Rose petals and romantic decorations</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-stone-600 mt-1">•</span>
+                    <span>Premium wine selection</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-stone-600 mt-1">•</span>
+                    <span>Bluetooth speaker for music</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-stone-600 mt-1">•</span>
+                    <span>Professional setup and cleanup service</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-emerald-100 rounded-2xl p-6 text-center">
+                <p className="text-stone-600 mb-4">
+                  All packages require 24-hour advance booking
+                </p>
+                <a
+                  href="https://wa.me/27814121666?text=I%20would%20like%20to%20book%20a%20picnic%20package."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl px-8 py-3 transition-all duration-300 transform hover:scale-105 shadow-md"
+                >
+                  Book Your Picnic
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <footer className="bg-stone-800 text-stone-300 py-12 px-6">
         <div className="max-w-7xl mx-auto text-center">
