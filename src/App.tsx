@@ -393,6 +393,38 @@ function App() {
                 </ul>
               </div>
 
+              <div className="bg-violet-50 rounded-2xl p-6 border-2 border-violet-200">
+  <h3 className="text-2xl font-serif text-stone-800 mb-2">Painting Picnic Experience</h3>
+  <p className="text-lg font-semibold text-violet-600 mb-4">R850 per couple</p>
+  <ul className="space-y-2 text-stone-600">
+    <li className="flex items-start gap-2">
+      <span className="text-violet-600 mt-1">•</span>
+      <span>All-inclusive picnic setup with comfortable seating and shade</span>
+    </li>
+    <li className="flex items-start gap-2">
+      <span className="text-violet-600 mt-1">•</span>
+      <span>Canvas, paint, brushes, and easels provided</span>
+    </li>
+    <li className="flex items-start gap-2">
+      <span className="text-violet-600 mt-1">•</span>
+      <span>Light snacks and refreshments</span>
+    </li>
+    <li className="flex items-start gap-2">
+      <span className="text-violet-600 mt-1">•</span>
+      <span>Choice between guided or self-led painting session</span>
+    </li>
+    <li className="flex items-start gap-2">
+      <span className="text-violet-600 mt-1">•</span>
+      <span>Relaxed outdoor setting perfect for creativity and connection</span>
+    </li>
+    <li className="flex items-start gap-2">
+      <span className="text-violet-600 mt-1">•</span>
+      <span>Take home your finished artworks</span>
+    </li>
+  </ul>
+</div>
+
+              
               <div className="bg-emerald-100 rounded-2xl p-6 text-center">
                 <p className="text-stone-600 mb-4">
                   All packages require 24-hour advance booking
