@@ -229,7 +229,8 @@ function App() {
                   Hire a bike and explore the property at your own pace — perfect for couples or families.
                 </p>
                 <a
-                  href="https://wa.me/27814121666?text=I%20would%20like%20at%20to%20book%202%20bikes%20for%20Our stay."
+                  href="https://wa.me/27814121666?text=Hi!%20I%27m%20interested%20in%20inquiring%20about%20booking%20bikes%20for%20our%20stay.%20Could%20you%20please%20share%20more%20details%3F
+"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group"
@@ -397,7 +398,8 @@ function App() {
                   All packages require 24-hour advance booking
                 </p>
                 <a
-                  href="https://wa.me/27814121666?text=I%20would%20like%20at%20to%20book%202%20bikes%20for%20Ourstay."
+                  href="https://wa.me/27814121666?text=Hi!%20I%27m%20interested%20in%20one%20of%20your%20picnic%20packages.%20Could%20you%20please%20share%20more%20details%3F
+."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl px-8 py-3 transition-all duration-300 transform hover:scale-105 shadow-md"
