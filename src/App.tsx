@@ -397,7 +397,7 @@ function App() {
                   All packages require 24-hour advance booking
                 </p>
                 <a
-                  href="https://wa.me/27814121666?text=I%20would%20like%20to%20book%20a%20picnic%20package."
+                  href="https://wa.me/27814121666?text=I%20would%20like%20at%20to%20book%202%20bikes%20for%20Ourstay."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl px-8 py-3 transition-all duration-300 transform hover:scale-105 shadow-md"
