@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mountain, ShoppingBag, Map, Bike, UtensilsCrossed, Sparkles, ArrowDown, Download, X } from 'lucide-react';
+import { Mountain, ShoppingBag, Map, UtensilsCrossed, Sparkles, ArrowDown, Download, X } from 'lucide-react';
 
 function App() {
   const [email, setEmail] = useState('');
@@ -219,23 +219,22 @@ function App() {
             </div>
 
             <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://thumbs.dreamstime.com/b/young-inian-boy-riding-bush-mathaithai-mountain-bike-rustenburg-south-africa-%C3%A2%E2%82%AC-october-race-rustenburg-south-africa-84256393.jpg?auto=compress&cs=tinysrgb&w=800')` }} />
+              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/2097090/pexels-photo-2097090.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-3">
-                  <Bike className="w-6 h-6 text-emerald-600" />
-                  <h3 className="text-2xl font-serif text-stone-800">Bike Hire</h3>
+                  <UtensilsCrossed className="w-6 h-6 text-emerald-600" />
+                  <h3 className="text-2xl font-serif text-stone-800">Places with Restaurants</h3>
                 </div>
                 <p className="text-stone-600 mb-6 leading-relaxed">
-                  Hire a bike and explore the property at your own pace — perfect for couples or families.
+                  Discover nearby restaurants in Dinokeng Reserve. Please call to book or confirm if they do walk-ins.
                 </p>
                 <a
-                  href="https://wa.me/27814121666?text=Hi!%20I%27m%20interested%20in%20inquiring%20about%20booking%20bikes%20for%20our%20stay.%20Could%20you%20please%20share%20more%20details%3F
-"
+                  href="https://www.dinokengreserve.co.za/dinner-bed-breakfast/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group"
                 >
-                  Rent Bike
+                  Explore Dining
                   <span className="transform group-hover:translate-x-1 transition-transform">→</span>
                 </a>
               </div>
