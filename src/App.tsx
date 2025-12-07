@@ -111,7 +111,7 @@ function App() {
         </div>
       )}
 
-      <section id="offers" className="py-20 px-6 bg-emerald-50">
+      <section id="offers" className="py-20 px-6 bg-emerald-50 hidden">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-serif text-stone-800 mb-4">
             Get 10% Off from our Store
@@ -241,22 +241,46 @@ function App() {
             </div>
 
             <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://bentlys.co.za/wp-content/uploads/2024/01/WhatsApp-Image-2024-01-22-at-19.52.10.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
+              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/3408356/pexels-photo-3408356.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-3">
-                  <UtensilsCrossed className="w-6 h-6 text-emerald-600" />
-                  <h3 className="text-2xl font-serif text-stone-800">Picnic Packages</h3>
+                  <ShoppingBag className="w-6 h-6 text-emerald-600" />
+                  <h3 className="text-2xl font-serif text-stone-800">Shops Nearby</h3>
                 </div>
                 <p className="text-stone-600 mb-6 leading-relaxed">
-                  Enjoy ready-made picnic setups with local snacks, drinks, and scenic spots to relax.
+                  Pop by nearby shops and pop-up venues in Dinokeng. Explore local retail and unique finds.
                 </p>
-                <button
-                  onClick={() => setShowPicnicModal(true)}
-                  className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group"
-                >
-                  View Packages
-                  <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-                </button>
+                <div className="space-y-2">
+                  <a
+                    href="https://maps.app.goo.gl/EGR8oSUoXQUd1oWc8"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group text-sm"
+                  >
+                    Shop 1
+                    <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                  </a>
+                  <br />
+                  <a
+                    href="https://maps.app.goo.gl/BCMWbv6Hyo8PeWPz7"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group text-sm"
+                  >
+                    Shop 2
+                    <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                  </a>
+                  <br />
+                  <a
+                    href="https://maps.app.goo.gl/YT6f53ojahoZZiGK6"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group text-sm"
+                  >
+                    Shop 3
+                    <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                  </a>
+                </div>
               </div>
             </div>
 
