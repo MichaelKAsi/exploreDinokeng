@@ -285,7 +285,7 @@ function App() {
             </div>
 
             <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1 relative">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/207529/pexels-photo-207529.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
+              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/2347628/pexels-photo-2347628.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
               <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-2xl">
                 <div className="text-center">
                   <p className="text-white text-2xl font-serif font-semibold">Coming Soon</p>
@@ -335,7 +335,7 @@ function App() {
             </div>
 
             <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1 relative">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/3807517/pexels-photo-3807517.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
+              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
               <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-2xl">
                 <div className="text-center">
                   <p className="text-white text-2xl font-serif font-semibold">Coming Soon</p>
@@ -344,7 +344,7 @@ function App() {
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-3">
                   <Dices className="w-6 h-6 text-emerald-600" />
-                  <h3 className="text-2xl font-serif text-stone-800">Game Board Rental</h3>
+                  <h3 className="text-2xl font-serif text-stone-800">Boardgame</h3>
                 </div>
                 <p className="text-stone-600 mb-6 leading-relaxed">
                   Enjoy classic board games and entertainment for your group at scenic locations.
