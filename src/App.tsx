@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mountain, ShoppingBag, Map, UtensilsCrossed, Sparkles, ArrowDown, Download, X } from 'lucide-react';
+import { Mountain, ShoppingBag, Map, UtensilsCrossed, Sparkles, ArrowDown, Download, X, Bike, Dices } from 'lucide-react';
 
 function App() {
   const [email, setEmail] = useState('');
@@ -281,6 +281,81 @@ function App() {
                     <span className="transform group-hover:translate-x-1 transition-transform">→</span>
                   </a>
                 </div>
+              </div>
+            </div>
+
+            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1 relative">
+              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/207529/pexels-photo-207529.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
+              <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-2xl">
+                <div className="text-center">
+                  <p className="text-white text-2xl font-serif font-semibold">Coming Soon</p>
+                </div>
+              </div>
+              <div className="p-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <Bike className="w-6 h-6 text-emerald-600" />
+                  <h3 className="text-2xl font-serif text-stone-800">Bike Rentals</h3>
+                </div>
+                <p className="text-stone-600 mb-6 leading-relaxed">
+                  Explore the trails on two wheels with our premium bike rental service.
+                </p>
+                <button
+                  disabled
+                  className="text-stone-400 font-semibold cursor-not-allowed inline-flex items-center gap-2 group"
+                >
+                  Coming Soon
+                  <span className="transform">→</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1 relative">
+              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://bentlys.co.za/wp-content/uploads/2024/01/WhatsApp-Image-2024-01-22-at-19.52.10.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
+              <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-2xl">
+                <div className="text-center">
+                  <p className="text-white text-2xl font-serif font-semibold">Coming Soon</p>
+                </div>
+              </div>
+              <div className="p-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <UtensilsCrossed className="w-6 h-6 text-emerald-600" />
+                  <h3 className="text-2xl font-serif text-stone-800">Picnic Packages</h3>
+                </div>
+                <p className="text-stone-600 mb-6 leading-relaxed">
+                  Enjoy ready-made picnic setups with local snacks, drinks, and scenic spots to relax.
+                </p>
+                <button
+                  disabled
+                  className="text-stone-400 font-semibold cursor-not-allowed inline-flex items-center gap-2 group"
+                >
+                  Coming Soon
+                  <span className="transform">→</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1 relative">
+              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/3807517/pexels-photo-3807517.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
+              <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-2xl">
+                <div className="text-center">
+                  <p className="text-white text-2xl font-serif font-semibold">Coming Soon</p>
+                </div>
+              </div>
+              <div className="p-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <Dices className="w-6 h-6 text-emerald-600" />
+                  <h3 className="text-2xl font-serif text-stone-800">Game Board Rental</h3>
+                </div>
+                <p className="text-stone-600 mb-6 leading-relaxed">
+                  Enjoy classic board games and entertainment for your group at scenic locations.
+                </p>
+                <button
+                  disabled
+                  className="text-stone-400 font-semibold cursor-not-allowed inline-flex items-center gap-2 group"
+                >
+                  Coming Soon
+                  <span className="transform">→</span>
+                </button>
               </div>
             </div>
 
