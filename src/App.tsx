@@ -7,7 +7,7 @@ function App() {
   const [isMapFullscreen, setIsMapFullscreen] = useState(false);
   const [showPicnicModal, setShowPicnicModal] = useState(false);
 
-  const mapUrl = 'https://bentlys.co.za/wp-content/uploads/2025/10/Bentlys-Masterplan-draft-scaled.webp';
+  const mapUrl = 'https://bentlys.co.za/wp-content/uploads/2025/12/walking_trailer_map.png';
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
