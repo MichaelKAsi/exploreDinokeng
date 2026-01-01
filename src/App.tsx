@@ -1,11 +1,28 @@
 import { useState } from 'react';
 import { Mountain, ShoppingBag, Map, UtensilsCrossed, Sparkles, ArrowDown, Download, X, Bike, Dices } from 'lucide-react';
 
+interface BoardGame {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+}
+
 function App() {
   const [email, setEmail] = useState('');
   const [showToast, setShowToast] = useState(false);
   const [isMapFullscreen, setIsMapFullscreen] = useState(false);
   const [showPicnicModal, setShowPicnicModal] = useState(false);
+  const [showBoardGamesModal, setShowBoardGamesModal] = useState(false);
+  const [selectedGames, setSelectedGames] = useState<string[]>([]);
+
+  const boardGames: BoardGame[] = [
+    { id: 'uno', name: 'Uno', price: 25, image: 'https://bentlys.co.za/wp-content/uploads/2026/01/6750c9153f9fc9d1140b5353.webp' },
+    { id: '30seconds', name: '30 Seconds', price: 25, image: 'https://bentlys.co.za/wp-content/uploads/2026/01/30-seconds-games-30-seconds-game-1131157144.jpg' },
+    { id: 'talk-flirt-dare', name: 'Talk, Flirt, Dare', price: 40, image: 'https://bentlys.co.za/wp-content/uploads/2026/01/17-card-game-box-1-talk-flirt-dare-original-imahdtsvqys99eww.webp' },
+    { id: 'dominoes', name: 'Dominoes', price: 25, image: 'https://bentlys.co.za/wp-content/uploads/2026/01/9-38-14-professional-dominoes-board-game-set-40pcs-box-1-world-original-imah4ngfrkvdgtjs.webp' },
+    { id: 'cards', name: 'Cards', price: 25, image: 'https://bentlys.co.za/wp-content/uploads/2026/01/CL81a.jpg' },
+  ];
 
   const mapUrl = 'https://bentlys.co.za/wp-content/uploads/2025/12/walking_trailer_map.png';
 
@@ -29,6 +46,32 @@ function App() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const toggleGameSelection = (gameId: string) => {
+    setSelectedGames(prev =>
+      prev.includes(gameId) ? prev.filter(id => id !== gameId) : [...prev, gameId]
+    );
+  };
+
+  const handleBoardGamesDone = () => {
+    if (selectedGames.length === 0) return;
+
+    const selectedGamesList = selectedGames
+      .map(gameId => {
+        const game = boardGames.find(g => g.id === gameId);
+        return game ? `${game.name} (R${game.price}/day)` : '';
+      })
+      .filter(Boolean)
+      .join(', ');
+
+    const message = `Hi, I would like to hire the following games: ${selectedGamesList}. There is a R100 security deposit for all games rented.`;
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/27814121666?text=${encodedMessage}`;
+
+    window.open(whatsappUrl, '_blank');
+    setShowBoardGamesModal(false);
+    setSelectedGames([]);
   };
 
   return (
@@ -334,27 +377,22 @@ function App() {
               </div>
             </div>
 
-            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1 relative">
+            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
               <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
-              <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-2xl">
-                <div className="text-center">
-                  <p className="text-white text-2xl font-serif font-semibold">Coming Soon</p>
-                </div>
-              </div>
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-3">
                   <Dices className="w-6 h-6 text-emerald-600" />
-                  <h3 className="text-2xl font-serif text-stone-800">Boardgame</h3>
+                  <h3 className="text-2xl font-serif text-stone-800">Board Games</h3>
                 </div>
                 <p className="text-stone-600 mb-6 leading-relaxed">
                   Enjoy classic board games and entertainment for your group at scenic locations.
                 </p>
                 <button
-                  disabled
-                  className="text-stone-400 font-semibold cursor-not-allowed inline-flex items-center gap-2 group"
+                  onClick={() => setShowBoardGamesModal(true)}
+                  className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group"
                 >
-                  Coming Soon
-                  <span className="transform">→</span>
+                  Rent Games
+                  <span className="transform group-hover:translate-x-1 transition-transform">→</span>
                 </button>
               </div>
             </div>
@@ -383,6 +421,83 @@ function App() {
           </div>
         </div>
       </section>
+
+      {showBoardGamesModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white border-b border-stone-200 px-8 py-6 flex justify-between items-center rounded-t-3xl">
+              <h2 className="text-3xl font-serif text-stone-800">Board Games for Hire</h2>
+              <button
+                onClick={() => {
+                  setShowBoardGamesModal(false);
+                  setSelectedGames([]);
+                }}
+                className="p-2 hover:bg-stone-100 rounded-full transition-colors"
+              >
+                <X className="w-6 h-6 text-stone-600" />
+              </button>
+            </div>
+
+            <div className="p-8 space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {boardGames.map(game => (
+                  <div
+                    key={game.id}
+                    className="border-2 border-stone-200 rounded-2xl overflow-hidden hover:border-emerald-500 transition-all duration-300 cursor-pointer"
+                    onClick={() => toggleGameSelection(game.id)}
+                  >
+                    <div className="relative">
+                      <img
+                        src={game.image}
+                        alt={game.name}
+                        className="w-full h-40 object-cover"
+                      />
+                      <div className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${
+                        selectedGames.includes(game.id)
+                          ? 'bg-emerald-600/90'
+                          : 'bg-black/0 hover:bg-black/20'
+                      }`}>
+                        {selectedGames.includes(game.id) && (
+                          <div className="text-white text-3xl">✓</div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="text-xl font-serif text-stone-800 mb-2">{game.name}</h3>
+                      <p className="text-lg font-semibold text-emerald-600">R{game.price}/day</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-stone-100 rounded-2xl p-4 mt-6">
+                <p className="text-stone-700 font-semibold">
+                  Security Deposit: R100 (for all games rented)
+                </p>
+              </div>
+
+              <div className="flex gap-4 mt-8 pt-4 border-t border-stone-200">
+                <button
+                  onClick={() => {
+                    setShowBoardGamesModal(false);
+                    setSelectedGames([]);
+                  }}
+                  className="flex-1 bg-stone-200 hover:bg-stone-300 text-stone-800 font-semibold rounded-xl px-6 py-3 transition-all duration-300"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleBoardGamesDone}
+                  disabled={selectedGames.length === 0}
+                  className="flex-1 bg-emerald-600 hover:bg-emerald-700 disabled:bg-stone-300 disabled:cursor-not-allowed text-white font-semibold rounded-xl px-6 py-3 transition-all duration-300 transform hover:scale-105"
+                >
+                  Done ({selectedGames.length})
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showPicnicModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
