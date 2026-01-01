@@ -18,7 +18,7 @@ function App() {
 
   const boardGames: BoardGame[] = [
     { id: 'uno', name: 'Uno', price: 25, image: 'https://bentlys.co.za/wp-content/uploads/2026/01/6750c9153f9fc9d1140b5353.webp' },
-    { id: '30seconds', name: '30 Seconds', price: 25, image: 'https://bentlys.co.za/wp-content/uploads/2026/01/board-game-143949731-4eaf7257d2d0475cad39475f3becdc5d.jpg' },
+    { id: '30seconds', name: '30 Seconds', price: 25, image: 'https://bentlys.co.za/wp-content/uploads/2026/01/30-seconds-games-30-seconds-game-1131157144.jpg' },
     { id: 'talk-flirt-dare', name: 'Talk, Flirt, Dare', price: 40, image: 'https://bentlys.co.za/wp-content/uploads/2026/01/17-card-game-box-1-talk-flirt-dare-original-imahdtsvqys99eww.webp' },
     { id: 'dominoes', name: 'Dominoes', price: 25, image: 'https://bentlys.co.za/wp-content/uploads/2026/01/9-38-14-professional-dominoes-board-game-set-40pcs-box-1-world-original-imah4ngfrkvdgtjs.webp' },
     { id: 'cards', name: 'Cards', price: 25, image: 'https://bentlys.co.za/wp-content/uploads/2026/01/CL81a.jpg' },
@@ -378,7 +378,7 @@ function App() {
             </div>
 
             <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
+              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://bentlys.co.za/wp-content/uploads/2026/01/board-game-143949731-4eaf7257d2d0475cad39475f3becdc5d.jpg')` }} />
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-3">
                   <Dices className="w-6 h-6 text-emerald-600" />
