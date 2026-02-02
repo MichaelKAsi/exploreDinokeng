@@ -167,6 +167,30 @@ function App() {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="group relative bg-white rounded-2xl overflow-hidden transform hover:-translate-y-1 md:col-span-1 lg:md:col-span-1">
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-rose-200 to-pink-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-lg -z-10"></div>
+              <div className="relative shadow-lg group-hover:shadow-2xl transition-all duration-300 bg-white rounded-2xl overflow-hidden h-full border-2 border-rose-300">
+                <div className="absolute top-4 right-4 bg-gradient-to-r from-rose-600 to-pink-600 text-white px-4 py-1 rounded-full text-sm font-semibold">Featured</div>
+                <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/3657100/pexels-photo-3657100.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
+                <div className="p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Heart className="w-6 h-6 text-rose-600" />
+                    <h3 className="text-2xl font-serif text-stone-800">Date Night Package</h3>
+                  </div>
+                  <p className="text-stone-600 mb-6 leading-relaxed">
+                    Enjoy a beautiful time with your partner and get to know each other better.
+                  </p>
+                  <button
+                    onClick={() => setShowDateNightModal(true)}
+                    className="text-rose-600 font-semibold hover:text-rose-700 transition-colors inline-flex items-center gap-2 group"
+                  >
+                    View Package
+                    <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
               <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://bentlys.co.za/wp-content/uploads/2025/10/IMG_3786.webp?auto=compress&cs=tinysrgb&w=800')` }} />
               <div className="p-6">
@@ -341,26 +365,6 @@ function App() {
                 >
                   Coming Soon
                   <span className="transform">→</span>
-                </button>
-              </div>
-            </div>
-
-            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/3657100/pexels-photo-3657100.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <Heart className="w-6 h-6 text-emerald-600" />
-                  <h3 className="text-2xl font-serif text-stone-800">Date Night Package</h3>
-                </div>
-                <p className="text-stone-600 mb-6 leading-relaxed">
-                  Enjoy a beautiful time with your partner and get to know each other better.
-                </p>
-                <button
-                  onClick={() => setShowDateNightModal(true)}
-                  className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group"
-                >
-                  View Package
-                  <span className="transform group-hover:translate-x-1 transition-transform">→</span>
                 </button>
               </div>
             </div>
