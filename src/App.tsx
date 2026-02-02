@@ -1,29 +1,13 @@
 import { useState } from 'react';
-import { Mountain, ShoppingBag, Map, UtensilsCrossed, Sparkles, ArrowDown, Download, X, Bike, Dices } from 'lucide-react';
-
-interface BoardGame {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-}
+import { Mountain, ShoppingBag, Map, UtensilsCrossed, Sparkles, ArrowDown, Download, X, Bike, Heart } from 'lucide-react';
 
 function App() {
   const [email, setEmail] = useState('');
   const [showToast, setShowToast] = useState(false);
   const [isMapFullscreen, setIsMapFullscreen] = useState(false);
   const [showPicnicModal, setShowPicnicModal] = useState(false);
-  const [showBoardGamesModal, setShowBoardGamesModal] = useState(false);
-  const [selectedGames, setSelectedGames] = useState<string[]>([]);
+  const [showDateNightModal, setShowDateNightModal] = useState(false);
   const [showFirewoodNotice, setShowFirewoodNotice] = useState(true);
-
-  const boardGames: BoardGame[] = [
-    { id: 'uno', name: 'Uno', price: 25, image: 'https://bentlys.co.za/wp-content/uploads/2026/01/6750c9153f9fc9d1140b5353.webp' },
-    { id: '30seconds', name: '30 Seconds', price: 25, image: 'https://bentlys.co.za/wp-content/uploads/2026/01/30-seconds-games-30-seconds-game-1131157144.jpg' },
-    { id: 'talk-flirt-dare', name: 'Talk, Flirt, Dare', price: 40, image: 'https://bentlys.co.za/wp-content/uploads/2026/01/17-card-game-box-1-talk-flirt-dare-original-imahdtsvqys99eww.webp' },
-    { id: 'dominoes', name: 'Dominoes', price: 25, image: 'https://bentlys.co.za/wp-content/uploads/2026/01/9-38-14-professional-dominoes-board-game-set-40pcs-box-1-world-original-imah4ngfrkvdgtjs.webp' },
-    { id: 'cards', name: 'Cards', price: 25, image: 'https://bentlys.co.za/wp-content/uploads/2026/01/CL81a.jpg' },
-  ];
 
   const mapUrl = 'https://bentlys.co.za/wp-content/uploads/2025/12/walking_trailer_map.png';
 
@@ -49,30 +33,13 @@ function App() {
     document.body.removeChild(link);
   };
 
-  const toggleGameSelection = (gameId: string) => {
-    setSelectedGames(prev =>
-      prev.includes(gameId) ? prev.filter(id => id !== gameId) : [...prev, gameId]
-    );
-  };
-
-  const handleBoardGamesDone = () => {
-    if (selectedGames.length === 0) return;
-
-    const selectedGamesList = selectedGames
-      .map(gameId => {
-        const game = boardGames.find(g => g.id === gameId);
-        return game ? `${game.name} (R${game.price}/day)` : '';
-      })
-      .filter(Boolean)
-      .join(', ');
-
-    const message = `Hi, I would like to hire the following games: ${selectedGamesList}. There is a R100 security deposit for all games rented.`;
+  const handleDateNightOrder = () => {
+    const message = `Hi! I would like to book the Date Night Package (R350). Please confirm availability. I understand that orders should be made at least 48 hours in advance.`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/27814121666?text=${encodedMessage}`;
 
     window.open(whatsappUrl, '_blank');
-    setShowBoardGamesModal(false);
-    setSelectedGames([]);
+    setShowDateNightModal(false);
   };
 
   return (
@@ -379,20 +346,20 @@ function App() {
             </div>
 
             <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://bentlys.co.za/wp-content/uploads/2026/01/board-game-143949731-4eaf7257d2d0475cad39475f3becdc5d.jpg')` }} />
+              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/3657100/pexels-photo-3657100.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-3">
-                  <Dices className="w-6 h-6 text-emerald-600" />
-                  <h3 className="text-2xl font-serif text-stone-800">Board Games</h3>
+                  <Heart className="w-6 h-6 text-emerald-600" />
+                  <h3 className="text-2xl font-serif text-stone-800">Date Night Package</h3>
                 </div>
                 <p className="text-stone-600 mb-6 leading-relaxed">
-                  Enjoy classic board games and entertainment for your group at scenic locations.
+                  Enjoy a beautiful time with your partner and get to know each other better.
                 </p>
                 <button
-                  onClick={() => setShowBoardGamesModal(true)}
+                  onClick={() => setShowDateNightModal(true)}
                   className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group"
                 >
-                  Rent Games
+                  View Package
                   <span className="transform group-hover:translate-x-1 transition-transform">→</span>
                 </button>
               </div>
@@ -503,76 +470,71 @@ function App() {
         </div>
       )}
 
-      {showBoardGamesModal && (
+      {showDateNightModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b border-stone-200 px-8 py-6 flex justify-between items-center rounded-t-3xl">
-              <h2 className="text-3xl font-serif text-stone-800">Board Games for Hire</h2>
+          <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-gradient-to-r from-rose-600 to-pink-600 border-b border-rose-700 px-8 py-6 flex justify-between items-center rounded-t-3xl">
+              <h2 className="text-3xl font-serif text-white">Date Night Package</h2>
               <button
-                onClick={() => {
-                  setShowBoardGamesModal(false);
-                  setSelectedGames([]);
-                }}
-                className="p-2 hover:bg-stone-100 rounded-full transition-colors"
+                onClick={() => setShowDateNightModal(false)}
+                className="p-2 hover:bg-white/20 rounded-full transition-colors"
               >
-                <X className="w-6 h-6 text-stone-600" />
+                <X className="w-6 h-6 text-white" />
               </button>
             </div>
 
-            <div className="p-8 space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {boardGames.map(game => (
-                  <div
-                    key={game.id}
-                    className="border-2 border-stone-200 rounded-2xl overflow-hidden hover:border-emerald-500 transition-all duration-300 cursor-pointer"
-                    onClick={() => toggleGameSelection(game.id)}
-                  >
-                    <div className="relative">
-                      <img
-                        src={game.image}
-                        alt={game.name}
-                        className="w-full h-40 object-cover"
-                      />
-                      <div className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${
-                        selectedGames.includes(game.id)
-                          ? 'bg-emerald-600/90'
-                          : 'bg-black/0 hover:bg-black/20'
-                      }`}>
-                        {selectedGames.includes(game.id) && (
-                          <div className="text-white text-3xl">✓</div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <h3 className="text-xl font-serif text-stone-800 mb-2">{game.name}</h3>
-                      <p className="text-lg font-semibold text-emerald-600">R{game.price}/day</p>
-                    </div>
-                  </div>
-                ))}
+            <div className="p-8 space-y-6">
+              <div className="bg-rose-50 rounded-2xl p-6 border-2 border-rose-200 text-center">
+                <p className="text-5xl font-serif text-rose-600 mb-2">R350</p>
+                <p className="text-lg text-stone-600">Perfect for Couples</p>
               </div>
 
-              <div className="bg-stone-100 rounded-2xl p-4 mt-6">
-                <p className="text-stone-700 font-semibold">
-                  Security Deposit: R100 (for all games rented)
+              <div className="bg-blue-50 rounded-2xl p-6 border-2 border-blue-200">
+                <p className="text-lg font-serif text-stone-800 italic text-center">
+                  "Enjoy a beautiful time with your partner and get to know each other better"
                 </p>
               </div>
 
-              <div className="flex gap-4 mt-8 pt-4 border-t border-stone-200">
+              <div className="space-y-4">
+                <h3 className="text-2xl font-serif text-stone-800">What's Included:</h3>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-3">
+                    <span className="text-rose-600 text-xl mt-0">•</span>
+                    <span className="text-stone-600">Intimate couples games to spark conversation and connection</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-rose-600 text-xl mt-0">•</span>
+                    <span className="text-stone-600">2 Canvas with paint supplies for creative moments</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-rose-600 text-xl mt-0">•</span>
+                    <span className="text-stone-600">Bottle of champagne to celebrate your time together</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-rose-600 text-xl mt-0">•</span>
+                    <span className="text-stone-600">Premium picnic blanket for comfort and style</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-amber-50 rounded-2xl p-4 border border-amber-300">
+                <p className="text-stone-700 text-sm">
+                  <span className="font-semibold">Important:</span> Orders should be made at least 48 hours in advance to avoid disappointment.
+                </p>
+              </div>
+
+              <div className="flex gap-4 pt-4 border-t border-stone-200">
                 <button
-                  onClick={() => {
-                    setShowBoardGamesModal(false);
-                    setSelectedGames([]);
-                  }}
+                  onClick={() => setShowDateNightModal(false)}
                   className="flex-1 bg-stone-200 hover:bg-stone-300 text-stone-800 font-semibold rounded-xl px-6 py-3 transition-all duration-300"
                 >
-                  Cancel
+                  Close
                 </button>
                 <button
-                  onClick={handleBoardGamesDone}
-                  disabled={selectedGames.length === 0}
-                  className="flex-1 bg-emerald-600 hover:bg-emerald-700 disabled:bg-stone-300 disabled:cursor-not-allowed text-white font-semibold rounded-xl px-6 py-3 transition-all duration-300 transform hover:scale-105"
+                  onClick={handleDateNightOrder}
+                  className="flex-1 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-xl px-6 py-3 transition-all duration-300 transform hover:scale-105"
                 >
-                  Done ({selectedGames.length})
+                  Order Now on WhatsApp
                 </button>
               </div>
             </div>
