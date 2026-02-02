@@ -15,6 +15,7 @@ function App() {
   const [showPicnicModal, setShowPicnicModal] = useState(false);
   const [showBoardGamesModal, setShowBoardGamesModal] = useState(false);
   const [selectedGames, setSelectedGames] = useState<string[]>([]);
+  const [showFirewoodNotice, setShowFirewoodNotice] = useState(true);
 
   const boardGames: BoardGame[] = [
     { id: 'uno', name: 'Uno', price: 25, image: 'https://bentlys.co.za/wp-content/uploads/2026/01/6750c9153f9fc9d1140b5353.webp' },
@@ -421,6 +422,86 @@ function App() {
           </div>
         </div>
       </section>
+
+      {showFirewoodNotice && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-gradient-to-r from-amber-600 to-orange-600 border-b border-amber-700 px-8 py-6 flex justify-between items-center rounded-t-3xl">
+              <h2 className="text-3xl font-serif text-white">Order Your Firewood Today!</h2>
+              <button
+                onClick={() => setShowFirewoodNotice(false)}
+                className="p-2 hover:bg-white/20 rounded-full transition-colors"
+              >
+                <X className="w-6 h-6 text-white" />
+              </button>
+            </div>
+
+            <div className="p-8 space-y-6">
+              <div className="bg-amber-50 rounded-2xl p-6 border-2 border-amber-200 text-center">
+                <p className="text-5xl font-serif text-amber-700 mb-2">R50/Bag</p>
+                <p className="text-lg text-stone-600">Premium Firewood - Ready to Burn</p>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="text-2xl font-serif text-stone-800">Order Process</h3>
+
+                <div className="space-y-4">
+                  <div className="bg-stone-50 rounded-xl p-4 border-l-4 border-amber-600">
+                    <p className="text-sm font-semibold text-stone-700 mb-3">Step 1: Make Payment</p>
+                    <div className="bg-white rounded-lg p-3 space-y-2 text-sm text-stone-600">
+                      <p><span className="font-semibold">Bank:</span> Nedbank</p>
+                      <p><span className="font-semibold">Account Holder:</span> Kiara Mayamiko (PTY) LTD</p>
+                      <p><span className="font-semibold">Account Number:</span> 12345678</p>
+                      <p className="pt-2"><span className="font-semibold">Reference:</span> Your Name - Wood</p>
+                    </div>
+                  </div>
+
+                  <div className="bg-stone-50 rounded-xl p-4 border-l-4 border-amber-600">
+                    <p className="text-sm font-semibold text-stone-700 mb-3">Step 2: Send Proof of Payment</p>
+                    <p className="text-sm text-stone-600 mb-3">Share your proof of payment via WhatsApp</p>
+                    <a
+                      href="https://wa.me/27814121666?text=Hi%2C%20I%20have%20made%20a%20payment%20for%20firewood%20and%20would%20like%20to%20place%20my%20order.%20Please%20find%20attached%20my%20proof%20of%20payment."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg px-6 py-2 transition-all duration-300 text-sm"
+                    >
+                      Send via WhatsApp
+                    </a>
+                  </div>
+
+                  <div className="bg-stone-50 rounded-xl p-4 border-l-4 border-amber-600">
+                    <p className="text-sm font-semibold text-stone-700 mb-2">Step 3: Get Delivery</p>
+                    <p className="text-sm text-stone-600">Your firewood will be delivered within <span className="font-semibold">30 minutes</span> of order confirmation.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-amber-100 rounded-2xl p-4 border border-amber-300">
+                <p className="text-stone-700 text-sm">
+                  <span className="font-semibold">Note:</span> Keep your proof of payment ready when contacting us for order confirmation.
+                </p>
+              </div>
+
+              <div className="flex gap-4 pt-4 border-t border-stone-200">
+                <button
+                  onClick={() => setShowFirewoodNotice(false)}
+                  className="flex-1 bg-stone-200 hover:bg-stone-300 text-stone-800 font-semibold rounded-xl px-6 py-3 transition-all duration-300"
+                >
+                  Maybe Later
+                </button>
+                <a
+                  href="https://wa.me/27814121666?text=Hi%2C%20I%20would%20like%20to%20order%20firewood.%20How%20do%20I%20proceed%3F"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-xl px-6 py-3 transition-all duration-300 transform hover:scale-105 text-center"
+                >
+                  Order Now
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showBoardGamesModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
