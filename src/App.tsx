@@ -446,18 +446,14 @@ function App() {
 
                 <div className="space-y-4">
                   <div className="bg-stone-50 rounded-xl p-4 border-l-4 border-amber-600">
-                    <p className="text-sm font-semibold text-stone-700 mb-3">Step 1: Make Payment</p>
-                    <div className="bg-white rounded-lg p-3 space-y-2 text-sm text-stone-600">
+                    <p className="text-sm font-semibold text-stone-700 mb-3">Step 1: Make Payment & Contact Us</p>
+                    <div className="bg-white rounded-lg p-3 space-y-2 text-sm text-stone-600 mb-3">
                       <p><span className="font-semibold">Bank:</span> Nedbank</p>
                       <p><span className="font-semibold">Account Holder:</span> Kiara Mayamiko (PTY) LTD</p>
                       <p><span className="font-semibold">Account Number:</span> 12345678</p>
                       <p className="pt-2"><span className="font-semibold">Reference:</span> Your Name - Wood</p>
                     </div>
-                  </div>
-
-                  <div className="bg-stone-50 rounded-xl p-4 border-l-4 border-amber-600">
-                    <p className="text-sm font-semibold text-stone-700 mb-3">Step 2: Send Proof of Payment</p>
-                    <p className="text-sm text-stone-600 mb-3">Share your proof of payment via WhatsApp</p>
+                    <p className="text-sm text-stone-600 mb-3">After payment, share your proof via WhatsApp:</p>
                     <a
                       href="https://wa.me/27814121666?text=Hi%2C%20I%20have%20made%20a%20payment%20for%20firewood%20and%20would%20like%20to%20place%20my%20order.%20Please%20find%20attached%20my%20proof%20of%20payment."
                       target="_blank"
@@ -469,7 +465,7 @@ function App() {
                   </div>
 
                   <div className="bg-stone-50 rounded-xl p-4 border-l-4 border-amber-600">
-                    <p className="text-sm font-semibold text-stone-700 mb-2">Step 3: Get Delivery</p>
+                    <p className="text-sm font-semibold text-stone-700 mb-2">Step 2: Get Delivery</p>
                     <p className="text-sm text-stone-600">Your firewood will be delivered within <span className="font-semibold">30 minutes</span> of order confirmation.</p>
                   </div>
                 </div>
