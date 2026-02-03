@@ -423,7 +423,7 @@ function App() {
       </section>
 
       {showFirewoodNotice && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8 md:p-4 bg-black/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8 md:p-4 bg-black/60 backdrop-blur-sm animate-modalFadeIn">
           <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[85vh] md:max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-gradient-to-r from-amber-600 to-orange-600 border-b border-amber-700 px-8 py-6 flex justify-between items-center rounded-t-3xl">
               <h2 className="text-3xl font-serif text-white">Order Your Firewood Today!</h2>
@@ -503,7 +503,7 @@ function App() {
       )}
 
       {showDateNightModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8 md:p-4 bg-black/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8 md:p-4 bg-black/60 backdrop-blur-sm animate-modalFadeIn">
           <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[85vh] md:max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-gradient-to-r from-rose-600 to-pink-600 border-b border-rose-700 px-8 py-6 flex justify-between items-center rounded-t-3xl">
               <h2 className="text-3xl font-serif text-white">Date Night Package</h2>
