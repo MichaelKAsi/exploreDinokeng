@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Mountain, ShoppingBag, Map, UtensilsCrossed, Sparkles, ArrowDown, Download, X, Bike, Heart } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Mountain, ShoppingBag, Map, UtensilsCrossed, Sparkles, ArrowDown, Download, X, Bike, Heart, Flame } from 'lucide-react';
 
 function App() {
   const [email, setEmail] = useState('');
@@ -7,7 +7,15 @@ function App() {
   const [isMapFullscreen, setIsMapFullscreen] = useState(false);
   const [showPicnicModal, setShowPicnicModal] = useState(false);
   const [showDateNightModal, setShowDateNightModal] = useState(false);
-  const [showFirewoodNotice, setShowFirewoodNotice] = useState(true);
+  const [showFirewoodNotice, setShowFirewoodNotice] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowFirewoodNotice(true);
+    }, 1700);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const mapUrl = 'https://bentlys.co.za/wp-content/uploads/2025/12/walking_trailer_map.png';
 
@@ -370,6 +378,26 @@ function App() {
             </div>
 
             <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
+              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/416978/pexels-photo-416978.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
+              <div className="p-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <Flame className="w-6 h-6 text-amber-600" />
+                  <h3 className="text-2xl font-serif text-stone-800">Premium Firewood</h3>
+                </div>
+                <p className="text-stone-600 mb-6 leading-relaxed">
+                  Keep your fire burning bright with our premium, ready-to-burn firewood. Perfect for cozy nights.
+                </p>
+                <button
+                  onClick={() => setShowFirewoodNotice(true)}
+                  className="text-amber-600 font-semibold hover:text-amber-700 transition-colors inline-flex items-center gap-2 group"
+                >
+                  Order Now
+                  <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
               <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://bentlys.co.za/wp-content/uploads/2025/10/IMG_2293.webp?auto=compress&cs=tinysrgb&w=800')` }} />
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-3">
@@ -395,8 +423,8 @@ function App() {
       </section>
 
       {showFirewoodNotice && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8 md:p-4 bg-black/60 backdrop-blur-sm">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[85vh] md:max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-gradient-to-r from-amber-600 to-orange-600 border-b border-amber-700 px-8 py-6 flex justify-between items-center rounded-t-3xl">
               <h2 className="text-3xl font-serif text-white">Order Your Firewood Today!</h2>
               <button
@@ -475,8 +503,8 @@ function App() {
       )}
 
       {showDateNightModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8 md:p-4 bg-black/60 backdrop-blur-sm">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[85vh] md:max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-gradient-to-r from-rose-600 to-pink-600 border-b border-rose-700 px-8 py-6 flex justify-between items-center rounded-t-3xl">
               <h2 className="text-3xl font-serif text-white">Date Night Package</h2>
               <button
