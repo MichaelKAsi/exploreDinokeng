@@ -10,11 +10,24 @@ function App() {
   const [showFirewoodNotice, setShowFirewoodNotice] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowFirewoodNotice(true);
-    }, 1700);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setShowFirewoodNotice(true);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
 
-    return () => clearTimeout(timer);
+    const experiencesSection = document.getElementById('experiences');
+    if (experiencesSection) {
+      observer.observe(experiencesSection);
+    }
+
+    return () => observer.disconnect();
   }, []);
 
   const mapUrl = 'https://bentlys.co.za/wp-content/uploads/2025/12/walking_trailer_map.png';
@@ -168,7 +181,7 @@ function App() {
         )}
       </section>
 
-      <section className="py-20 px-6 bg-stone-100">
+      <section id="experiences" className="py-20 px-6 bg-stone-100">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-serif text-stone-800 text-center mb-16">
             Discover Local Experiences
