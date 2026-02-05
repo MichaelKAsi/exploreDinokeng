@@ -450,7 +450,7 @@ function App() {
                     <div className="bg-white rounded-lg p-3 space-y-2 text-sm text-stone-600 mb-3">
                       <p><span className="font-semibold">Bank:</span> Nedbank</p>
                       <p><span className="font-semibold">Account Holder:</span> Kiara Mayamiko (PTY) LTD</p>
-                      <p><span className="font-semibold">Account Number:</span> 12345678</p>
+                      <p><span className="font-semibold">Account Number:</span> 1292109114</p>
                       <p className="pt-2"><span className="font-semibold">Reference:</span> Your Name - Wood</p>
                     </div>
                     <p className="text-sm text-stone-600 mb-3">After payment, share your proof via WhatsApp:</p>
@@ -540,7 +540,15 @@ function App() {
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-rose-600 text-xl mt-0">•</span>
-                    <span className="text-stone-600">Premium picnic blanket for comfort and style</span>
+                    <span className="text-stone-600">Microwave popcorn for cozy snacking</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-rose-600 text-xl mt-0">•</span>
+                    <span className="text-stone-600">Premium wine selection</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-rose-600 text-xl mt-0">•</span>
+                    <span className="text-stone-600">Gourmet snacks and treats</span>
                   </li>
                 </ul>
               </div>
