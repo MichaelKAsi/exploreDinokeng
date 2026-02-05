@@ -536,10 +536,6 @@ function App() {
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-rose-600 text-xl mt-0">•</span>
-                    <span className="text-stone-600">Bottle of champagne to celebrate your time together</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-rose-600 text-xl mt-0">•</span>
                     <span className="text-stone-600">Microwave popcorn for cozy snacking</span>
                   </li>
                   <li className="flex items-start gap-3">
@@ -548,7 +544,7 @@ function App() {
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-rose-600 text-xl mt-0">•</span>
-                    <span className="text-stone-600">Gourmet snacks and treats</span>
+                    <span className="text-stone-600">Snacks and Treats</span>
                   </li>
                 </ul>
               </div>
