@@ -56,8 +56,8 @@ function App() {
     },
     {
       id: 2,
-      title: 'Premium Firewood\nKeep Your Nights Warm & Cozy',
-      description: 'Premium, ready-to-burn firewood delivered within 30 minutes. Perfect for cozy nights under the stars.',
+      title: '',
+      description: '',
       backgroundImage: 'https://storage.googleapis.com/promoslides/ChatGPT%20Image%20Feb%2018%2C%202026%2C%2001_56_13%20PM.png?auto=compress&cs=tinysrgb&w=1920',
       buttonText: 'Order Now',
     },
