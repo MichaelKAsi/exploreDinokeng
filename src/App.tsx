@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Mountain, ShoppingBag, Map, UtensilsCrossed, Sparkles, ArrowDown, Download, X, Bike, Heart, Flame } from 'lucide-react';
+import { Mountain, ShoppingBag, Map, UtensilsCrossed, Sparkles, Download, X, Bike, Heart, Flame } from 'lucide-react';
+import { HeroCarousel } from './components/HeroCarousel';
 
 function App() {
   const [email, setEmail] = useState('');
@@ -42,8 +43,32 @@ function App() {
   };
 
   const scrollToOffers = () => {
-    document.getElementById('offers')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('experiences')?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  const heroSlides = [
+    {
+      id: 1,
+      title: 'Discover Bentlys\nYour Gateway to Dinokeng\'s Best Activities',
+      description: 'From scenic walking trails and bike adventures to spa indulgence and picnic escapes — experience the best of nature and comfort at Bentlys.',
+      backgroundImage: 'https://images.pexels.com/photos/631317/pexels-photo-631317.jpeg?auto=compress&cs=tinysrgb&w=1920',
+      buttonText: 'Start Exploring',
+    },
+    {
+      id: 2,
+      title: 'Premium Firewood\nKeep Your Nights Warm & Cozy',
+      description: 'Premium, ready-to-burn firewood delivered within 30 minutes. Perfect for cozy nights under the stars.',
+      backgroundImage: 'https://images.pexels.com/photos/416978/pexels-photo-416978.jpeg?auto=compress&cs=tinysrgb&w=1920',
+      buttonText: 'Order Now',
+    },
+    {
+      id: 3,
+      title: 'Mobile Spa Services\nRelax & Rejuvenate',
+      description: 'Professional spa treatments brought right to your cabin or deck. Unwind in luxury with our expert therapists.',
+      backgroundImage: 'https://images.pexels.com/photos/3629610/pexels-photo-3629610.jpeg?auto=compress&cs=tinysrgb&w=1920',
+      buttonText: 'Book Spa',
+    },
+  ];
 
   const handleDownloadMap = () => {
     const link = document.createElement('a');
@@ -65,31 +90,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      <section
-        id="hero"
-        className="relative h-screen flex items-center justify-center bg-cover bg-center"
-        style={{
-          backgroundImage: `url('https://images.pexels.com/photos/631317/pexels-photo-631317.jpeg?auto=compress&cs=tinysrgb&w=1920')`,
-        }}
-      >
-        <div className="absolute inset-0 bg-black/40" />
-
-        <div className="relative z-10 text-center text-white px-6 animate-fadeIn">
-          <h1 className="text-5xl md:text-7xl font-serif mb-6 leading-tight">
-            Discover Bentlys<br />Your Gateway to Dinokeng’s Best Activities
-          </h1>
-          <p className="text-xl md:text-2xl mb-10 text-stone-100 max-w-2xl mx-auto font-light">
-            From scenic walking trails and bike adventures to spa indulgence and picnic escapes — experience the best of nature and comfort at Bentlys.
-          </p>
-          <button
-            onClick={scrollToOffers}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-full px-10 py-4 text-lg transition-all duration-300 transform hover:scale-105 shadow-lg inline-flex items-center gap-2"
-          >
-            Start Exploring
-            <ArrowDown className="w-5 h-5 animate-bounce" />
-          </button>
-        </div>
-      </section>
+      <HeroCarousel slides={heroSlides} onExploreClick={scrollToOffers} />
 
       <section className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
