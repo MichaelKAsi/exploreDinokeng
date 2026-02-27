@@ -59,7 +59,7 @@ function App() {
       title: '',
       description: '',
       backgroundImage: 'https://storage.googleapis.com/promoslides/ChatGPT%20Image%20Feb%2018%2C%202026%2C%2001_56_13%20PM.png?auto=compress&cs=tinysrgb&w=1920',
-      buttonText: 'Order Now',
+      
     },
   ];
 
