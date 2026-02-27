@@ -61,13 +61,6 @@ function App() {
       backgroundImage: 'https://storage.googleapis.com/promoslides/ChatGPT%20Image%20Feb%2018%2C%202026%2C%2001_56_13%20PM.png?auto=compress&cs=tinysrgb&w=1920',
       buttonText: 'Order Now',
     },
-    {
-      id: 3,
-      title: 'Mobile Spa Services\nRelax & Rejuvenate',
-      description: 'Professional spa treatments brought right to your cabin or deck. Unwind in luxury with our expert therapists.',
-      backgroundImage: 'https://images.pexels.com/photos/3629610/pexels-photo-3629610.jpeg?auto=compress&cs=tinysrgb&w=1920',
-      buttonText: 'Book Spa',
-    },
   ];
 
   const handleDownloadMap = () => {
