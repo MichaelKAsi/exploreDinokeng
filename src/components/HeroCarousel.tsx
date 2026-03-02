@@ -43,20 +43,19 @@ export function HeroCarousel({ slides, onExploreClick }: HeroCarouselProps) {
   return (
     <section
       id="hero"
-      className="relative h-screen flex items-center justify-center bg-cover bg-center overflow-hidden"
+      className="relative aspect-square md:h-screen flex items-center justify-center bg-cover bg-center overflow-hidden"
       style={{
         backgroundImage: `url('${slide.backgroundImage}')`,
       }}
     >
       <div className="absolute inset-0 bg-black/40" />
 
-      <div className="relative z-10 text-center text-white px-6 animate-fadeIn">
-        <h1 className="text-5xl md:text-7xl font-serif mb-6 leading-tight">
-          {slide.title}
-        </h1>
-        <p className="text-xl md:text-2xl mb-10 text-stone-100 max-w-2xl mx-auto font-light">
-          {slide.description}
-        </p>
+      <div className="relative z-10 text-center text-white px-6 animate-fadeIn flex flex-col items-center justify-center">
+        {slide.title && (
+          <h1 className="text-3xl md:text-7xl font-serif mb-6 leading-tight">
+            {slide.title}
+          </h1>
+        )}
         <button
           onClick={onExploreClick}
           className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-full px-10 py-4 text-lg transition-all duration-300 transform hover:scale-105 shadow-lg inline-flex items-center gap-2"
