@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Mountain, ShoppingBag, Map, UtensilsCrossed, Sparkles, Download, X, Bike, Heart, Flame } from 'lucide-react';
 import { HeroCarousel } from './components/HeroCarousel';
+import { Footer } from './components/Footer';
+import { supabase, Banner } from './lib/supabase';
 
 function App() {
   const [email, setEmail] = useState('');
@@ -9,6 +11,26 @@ function App() {
   const [showPicnicModal, setShowPicnicModal] = useState(false);
   const [showDateNightModal, setShowDateNightModal] = useState(false);
   const [showFirewoodNotice, setShowFirewoodNotice] = useState(false);
+  const [banners, setBanners] = useState<Banner[]>([]);
+
+  useEffect(() => {
+    fetchBanners();
+  }, []);
+
+  const fetchBanners = async () => {
+    try {
+      const { data } = await supabase
+        .from('banners')
+        .select('*')
+        .order('order', { ascending: true });
+
+      if (data) {
+        setBanners(data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch banners:', error);
+    }
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -46,7 +68,7 @@ function App() {
     document.getElementById('experiences')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const heroSlides = [
+  const defaultSlides = [
     {
       id: 1,
       title: 'Discover Bentlys\nYour Gateway to Dinokeng\'s Best Activities',
@@ -54,14 +76,17 @@ function App() {
       backgroundImage: 'https://images.pexels.com/photos/631317/pexels-photo-631317.jpeg?auto=compress&cs=tinysrgb&w=1920',
       buttonText: 'Start Exploring',
     },
-    {
-      id: 2,
-      title: '',
-      description: '',
-      backgroundImage: 'https://storage.googleapis.com/promoslides/ChatGPT%20Image%20Feb%2018%2C%202026%2C%2001_56_13%20PM.png?auto=compress&cs=tinysrgb&w=1920',
-      
-    },
   ];
+
+  const heroSlides = banners.length > 0
+    ? banners.map((banner) => ({
+        id: banner.id as unknown as number,
+        title: banner.title,
+        description: '',
+        backgroundImage: banner.background_image,
+        buttonText: banner.button_text || undefined,
+      }))
+    : defaultSlides;
 
   const handleDownloadMap = () => {
     const link = document.createElement('a');
@@ -739,12 +764,7 @@ function App() {
         </div>
       )}
 
-      <footer className="bg-stone-800 text-stone-300 py-12 px-6">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-lg font-serif mb-2">Bentlys | Dinokeng | Gauteng | Pretoria </p>
-          <p className="text-sm">Nature. Leisure. Luxury</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
