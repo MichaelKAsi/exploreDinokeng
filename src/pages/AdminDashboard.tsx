@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { supabase, Banner } from '../lib/supabase';
-import { LogOut, Plus, Trash2, AlertCircle, Check } from 'lucide-react';
+import { LogOut, Plus, Trash2, AlertCircle, Check, Upload, X as XIcon } from 'lucide-react';
 
 export function AdminDashboard() {
   const [banners, setBanners] = useState<Banner[]>([]);
@@ -15,6 +15,9 @@ export function AdminDashboard() {
     background_image: '',
   });
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState<string>('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { session, signOut } = useAuth();
   const navigate = useNavigate();
@@ -95,6 +98,7 @@ export function AdminDashboard() {
       button_text: banner.button_text || '',
       background_image: banner.background_image,
     });
+    setPreviewUrl(banner.background_image);
     setEditingId(banner.id);
   };
 
@@ -125,6 +129,37 @@ export function AdminDashboard() {
   const handleCancel = () => {
     setFormData({ title: '', button_text: '', background_image: '' });
     setEditingId(null);
+    setPreviewUrl('');
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingImage(true);
+    setError('');
+
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}.${fileExt}`;
+
+      const { error: uploadError, data } = await supabase.storage
+        .from('banners')
+        .upload(fileName, file);
+
+      if (uploadError) throw uploadError;
+
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('banners').getPublicUrl(fileName);
+
+      setFormData({ ...formData, background_image: publicUrl });
+      setPreviewUrl(publicUrl);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to upload image');
+    } finally {
+      setUploadingImage(false);
+    }
   };
 
   return (
@@ -197,28 +232,57 @@ export function AdminDashboard() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
-                    Background Image URL
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    Banner Image
                   </label>
+
+                  {previewUrl && (
+                    <div className="relative mb-4 rounded-lg overflow-hidden border border-slate-300 bg-slate-50">
+                      <img
+                        src={previewUrl}
+                        alt="Banner preview"
+                        className="w-full h-40 object-cover"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setPreviewUrl('');
+                          setFormData({
+                            ...formData,
+                            background_image: '',
+                          });
+                        }}
+                        className="absolute top-2 right-2 p-1 bg-red-500 hover:bg-red-600 text-white rounded transition"
+                      >
+                        <XIcon className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
+
                   <input
-                    type="url"
-                    value={formData.background_image}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        background_image: e.target.value,
-                      })
-                    }
-                    required
-                    placeholder="https://example.com/image.jpg"
-                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition"
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    disabled={uploadingImage}
+                    className="hidden"
                   />
+
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={uploadingImage}
+                    className="w-full px-3 py-2 border-2 border-dashed border-slate-300 rounded-lg text-slate-700 hover:border-emerald-500 hover:text-emerald-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  >
+                    <Upload className="w-4 h-4" />
+                    {uploadingImage ? 'Uploading...' : 'Upload Image'}
+                  </button>
                 </div>
 
                 <div className="flex gap-2 pt-2">
                   <button
                     type="submit"
-                    disabled={loading}
+                    disabled={loading || !formData.background_image}
                     className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     <Plus className="w-4 h-4" />

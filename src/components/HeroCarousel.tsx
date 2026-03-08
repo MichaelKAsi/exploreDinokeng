@@ -43,9 +43,10 @@ export function HeroCarousel({ slides, onExploreClick }: HeroCarouselProps) {
   return (
     <section
       id="hero"
-      className="relative aspect-square md:h-screen flex items-center justify-center bg-cover bg-center overflow-hidden"
+      className="relative aspect-square md:h-screen flex items-center justify-center bg-cover bg-center overflow-hidden w-full"
       style={{
         backgroundImage: `url('${slide.backgroundImage}')`,
+        backgroundAttachment: 'cover',
       }}
     >
       <div className="absolute inset-0 bg-black/40" />
