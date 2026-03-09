@@ -98,7 +98,7 @@ function App() {
   };
 
   const handleDateNightOrder = () => {
-    const message = `Hi! I would like to book the Date Night Package (R350). Please confirm availability. I understand that orders should be made at least 48 hours in advance.`;
+    const message = `Hi! I would like to book the Date Night Package (R450). Please confirm availability. I understand that orders should be made at least 48 hours in advance.`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/27814121666?text=${encodedMessage}`;
 
