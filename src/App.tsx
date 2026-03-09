@@ -545,7 +545,7 @@ function App() {
 
             <div className="p-8 space-y-6">
               <div className="bg-rose-50 rounded-2xl p-6 border-2 border-rose-200 text-center">
-                <p className="text-5xl font-serif text-rose-600 mb-2">R350</p>
+                <p className="text-5xl font-serif text-rose-600 mb-2">R450</p>
                 <p className="text-lg text-stone-600">Perfect for Couples</p>
               </div>
 
