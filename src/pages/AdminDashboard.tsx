@@ -282,7 +282,7 @@ export function AdminDashboard() {
                 <div className="flex gap-2 pt-2">
                   <button
                     type="submit"
-                    disabled={loading || !formData.background_image}
+                    disabled={loading || !formData.background_image || !formData.title}
                     className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     <Plus className="w-4 h-4" />
