@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, ArrowLeft } from 'lucide-react';
 
 export function AdminLogin() {
   const [email, setEmail] = useState('');
@@ -29,6 +29,13 @@ export function AdminLogin() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
+        <button
+          onClick={() => navigate('/')}
+          className="mb-6 flex items-center gap-2 text-white hover:text-emerald-400 transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to Home
+        </button>
         <div className="bg-white rounded-lg shadow-xl p-8">
           <h1 className="text-3xl font-serif text-center mb-2 text-slate-900">
             Admin Portal
