@@ -410,7 +410,7 @@ function App() {
             </div>
 
             <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/416978/pexels-photo-416978.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
+              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://storage.googleapis.com/cards_dinokeng/campfire-closeup.webp?auto=compress&cs=tinysrgb&w=800')` }} />
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-3">
                   <Flame className="w-6 h-6 text-amber-600" />
