@@ -360,7 +360,7 @@ function App() {
             </div>
 
             <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1 relative">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/2347628/pexels-photo-2347628.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
+              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://storage.googleapis.com/cards_dinokeng/899660820_EmmaGatland174122.e626b57af8d0249abe2c13ebf18438c0.jpg?auto=compress&cs=tinysrgb&w=800')` }} />
               <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-2xl">
                 <div className="text-center">
                   <p className="text-white text-2xl font-serif font-semibold">Coming Soon</p>
