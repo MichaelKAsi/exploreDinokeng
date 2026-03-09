@@ -55,7 +55,7 @@ export function AdminDashboard() {
         const { error: updateError } = await supabase
           .from('banners')
           .update({
-            title: formData.title,
+            title: formData.title || null,
             button_text: formData.button_text || null,
             background_image: formData.background_image,
             updated_at: new Date().toISOString(),
@@ -69,7 +69,7 @@ export function AdminDashboard() {
           .from('banners')
           .insert([
             {
-              title: formData.title,
+              title: formData.title || null,
               button_text: formData.button_text || null,
               background_image: formData.background_image,
               order: banners.length,
@@ -94,7 +94,7 @@ export function AdminDashboard() {
 
   const handleEdit = (banner: Banner) => {
     setFormData({
-      title: banner.title,
+      title: banner.title || '',
       button_text: banner.button_text || '',
       background_image: banner.background_image,
     });
@@ -210,8 +210,7 @@ export function AdminDashboard() {
                     onChange={(e) =>
                       setFormData({ ...formData, title: e.target.value })
                     }
-                    required
-                    placeholder="Banner title"
+                    placeholder="Banner title (optional)"
                     className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition"
                   />
                 </div>
@@ -282,7 +281,7 @@ export function AdminDashboard() {
                 <div className="flex gap-2 pt-2">
                   <button
                     type="submit"
-                    disabled={loading || !formData.background_image || !formData.title}
+                    disabled={loading || !formData.background_image}
                     className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     <Plus className="w-4 h-4" />
@@ -322,9 +321,11 @@ export function AdminDashboard() {
                     >
                       <div className="flex items-start justify-between gap-4">
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold text-slate-900 text-lg mb-1">
-                            {banner.title}
-                          </h3>
+                          {banner.title && (
+                            <h3 className="font-semibold text-slate-900 text-lg mb-1">
+                              {banner.title}
+                            </h3>
+                          )}
                           {banner.button_text && (
                             <p className="text-sm text-slate-600 mb-2">
                               Button: {banner.button_text}
