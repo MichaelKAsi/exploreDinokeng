@@ -49,22 +49,28 @@ export function HeroCarousel({ slides, onExploreClick }: HeroCarouselProps) {
         backgroundAttachment: 'cover',
       }}
     >
-      <div className="absolute inset-0 bg-black/40" />
+      {(slide.title || slide.buttonText) && (
+        <div className="absolute inset-0 bg-black/40" />
+      )}
 
-      <div className="relative z-10 text-center text-white px-6 animate-fadeIn flex flex-col items-center justify-center">
-        {slide.title && (
-          <h1 className="text-3xl md:text-7xl font-serif mb-6 leading-tight">
-            {slide.title}
-          </h1>
-        )}
-        <button
-          onClick={onExploreClick}
-          className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-full px-10 py-4 text-lg transition-all duration-300 transform hover:scale-105 shadow-lg inline-flex items-center gap-2"
-        >
-          {slide.buttonText || 'Start Exploring'}
-          <ArrowDown className="w-5 h-5 animate-bounce" />
-        </button>
-      </div>
+      {(slide.title || slide.buttonText) && (
+        <div className="relative z-10 text-center text-white px-6 animate-fadeIn flex flex-col items-center justify-center">
+          {slide.title && (
+            <h1 className="text-3xl md:text-7xl font-serif mb-6 leading-tight">
+              {slide.title}
+            </h1>
+          )}
+          {slide.buttonText && (
+            <button
+              onClick={onExploreClick}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-full px-10 py-4 text-lg transition-all duration-300 transform hover:scale-105 shadow-lg inline-flex items-center gap-2"
+            >
+              {slide.buttonText}
+              <ArrowDown className="w-5 h-5 animate-bounce" />
+            </button>
+          )}
+        </div>
+      )}
 
       <button
         onClick={prevSlide}
