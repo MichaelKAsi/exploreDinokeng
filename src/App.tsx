@@ -78,15 +78,18 @@ function App() {
     },
   ];
 
-  const heroSlides = banners.length > 0
-    ? banners.map((banner) => ({
-        id: banner.id as unknown as number,
-        title: banner.title,
-        description: '',
-        backgroundImage: banner.background_image,
-        buttonText: banner.button_text || undefined,
-      }))
-    : defaultSlides;
+  const heroSlides = [
+    ...defaultSlides,
+    ...(banners.length > 0
+      ? banners.map((banner) => ({
+          id: banner.id as unknown as number,
+          title: banner.title,
+          description: '',
+          backgroundImage: banner.background_image,
+          buttonText: banner.button_text || undefined,
+        }))
+      : []),
+  ];
 
   const handleDownloadMap = () => {
     const link = document.createElement('a');
