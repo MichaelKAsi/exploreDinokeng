@@ -265,7 +265,8 @@ function App() {
                   Shop local produce, souvenirs, and everyday essentials without leaving the property.
                 </p>
                 <a
-                  href="https://shop-bentlys.netlify.app/"
+                  href="https://wa.me/c/27814121666"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group"
                 >
