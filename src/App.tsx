@@ -89,28 +89,23 @@ function App() {
     document.getElementById('experiences')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const defaultSlides = [
-    {
-      id: 1,
-      title: 'Discover Bentlys\nYour Gateway to Dinokeng\'s Best Activities',
-      description: 'From scenic walking trails and bike adventures to spa indulgence and picnic escapes — experience the best of nature and comfort at Bentlys.',
-      backgroundImage: 'https://images.pexels.com/photos/631317/pexels-photo-631317.jpeg?auto=compress&cs=tinysrgb&w=1920',
-      buttonText: 'Start Exploring',
-    },
-  ];
-
-  const heroSlides = [
-    ...defaultSlides,
-    ...(banners.length > 0
-      ? banners.map((banner) => ({
-          id: banner.id as unknown as number,
-          title: banner.title,
-          description: '',
-          backgroundImage: banner.background_image,
-          buttonText: banner.button_text || undefined,
-        }))
-      : []),
-  ];
+  const heroSlides = banners.length > 0
+    ? banners.map((banner) => ({
+        id: banner.id as unknown as number,
+        title: banner.title,
+        description: '',
+        backgroundImage: banner.background_image,
+        buttonText: banner.button_text || undefined,
+      }))
+    : [
+        {
+          id: 1,
+          title: 'Discover Bentlys\nYour Gateway to Dinokeng\'s Best Activities',
+          description: 'From scenic walking trails and bike adventures to spa indulgence and picnic escapes — experience the best of nature and comfort at Bentlys.',
+          backgroundImage: 'https://images.pexels.com/photos/631317/pexels-photo-631317.jpeg?auto=compress&cs=tinysrgb&w=1920',
+          buttonText: 'Start Exploring',
+        },
+      ];
 
   const handleDownloadMap = () => {
     const link = document.createElement('a');
