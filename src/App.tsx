@@ -1,20 +1,49 @@
 import { useState, useEffect } from 'react';
-import { Mountain, ShoppingBag, Map, UtensilsCrossed, Sparkles, Download, X, Bike, Heart, Flame } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
 import { HeroCarousel } from './components/HeroCarousel';
 import { Footer } from './components/Footer';
-import { supabase, Banner } from './lib/supabase';
+import { supabase, Banner, ExperienceCard } from './lib/supabase';
+
+// Icon mapping helper
+const getIcon = (iconName: string, className?: string) => {
+  const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+    Mountain: LucideIcons.Mountain,
+    ShoppingBag: LucideIcons.ShoppingBag,
+    Map: LucideIcons.Map,
+    UtensilsCrossed: LucideIcons.UtensilsCrossed,
+    Sparkles: LucideIcons.Sparkles,
+    Download: LucideIcons.Download,
+    X: LucideIcons.X,
+    Bike: LucideIcons.Bike,
+    Heart: LucideIcons.Heart,
+    Flame: LucideIcons.Flame,
+    Coffee: LucideIcons.Coffee,
+    TreePine: LucideIcons.TreePine,
+    Tent: LucideIcons.Tent,
+    Compass: LucideIcons.Compass,
+  };
+
+  const IconComponent = iconMap[iconName] || LucideIcons.Mountain;
+  return <IconComponent className={className} />;
+};
+
+// Tailwind color class helper
+const getColorClass = (color: string, type: 'text' | 'bg' | 'border' = 'text') => {
+  // Colors are already in format like "emerald-600", so just prefix with type
+  return `${type}-${color.split('-')[1] === '600' ? color.replace('600', type === 'text' ? '600' : '600') : color}`;
+};
 
 function App() {
-  const [email, setEmail] = useState('');
   const [showToast, setShowToast] = useState(false);
   const [isMapFullscreen, setIsMapFullscreen] = useState(false);
-  const [showPicnicModal, setShowPicnicModal] = useState(false);
+  const [showFirewoodModal, setShowFirewoodModal] = useState(false);
   const [showDateNightModal, setShowDateNightModal] = useState(false);
-  const [showFirewoodNotice, setShowFirewoodNotice] = useState(false);
   const [banners, setBanners] = useState<Banner[]>([]);
+  const [cards, setCards] = useState<ExperienceCard[]>([]);
 
   useEffect(() => {
     fetchBanners();
+    fetchCards();
   }, []);
 
   const fetchBanners = async () => {
@@ -32,36 +61,28 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setShowFirewoodNotice(true);
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
+  const fetchCards = async () => {
+    try {
+      const { data } = await supabase
+        .from('experience_cards')
+        .select('*')
+        .eq('is_active', true)
+        .order('order', { ascending: true });
 
-    const experiencesSection = document.getElementById('experiences');
-    if (experiencesSection) {
-      observer.observe(experiencesSection);
+      if (data) {
+        setCards(data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch cards:', error);
     }
-
-    return () => observer.disconnect();
-  }, []);
+  };
 
   const mapUrl = 'https://bentlys.co.za/wp-content/uploads/2025/12/walking_trailer_map.png';
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      setShowToast(true);
-      setEmail('');
-      setTimeout(() => setShowToast(false), 4000);
-    }
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 4000);
   };
 
   const scrollToOffers = () => {
@@ -109,6 +130,120 @@ function App() {
     setShowDateNightModal(false);
   };
 
+  const handleCardClick = (card: ExperienceCard) => {
+    if (card.button_action === 'modal') {
+      if (card.modal_type === 'firewood') {
+        setShowFirewoodModal(true);
+      } else if (card.modal_type === 'date_night') {
+        setShowDateNightModal(true);
+      }
+    } else if (card.button_action === 'fullscreen') {
+      setIsMapFullscreen(true);
+    }
+  };
+
+  const renderCard = (card: ExperienceCard, index: number) => {
+    const isFeatured = card.is_featured;
+    const isComingSoon = card.is_coming_soon;
+    const hasAdditionalLinks = card.additional_links && card.additional_links.length > 0;
+
+    const cardContent = (
+      <>
+        {isFeatured && card.featured_badge_text && (
+          <div
+            className={`absolute top-4 right-4 bg-gradient-to-r ${card.featured_gradient_from ? `from-${card.featured_gradient_from}` : 'from-rose-600'} ${card.featured_gradient_to ? `to-${card.featured_gradient_to}` : 'to-pink-600'} text-white px-4 py-1 rounded-full text-sm font-semibold`}
+            style={{
+              backgroundImage: `linear-gradient(to right, var(--tw-gradient-from, #e11d48), var(--tw-gradient-to, #db2777))`
+            }}
+          >
+            {card.featured_badge_text}
+          </div>
+        )}
+        <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('${card.image_url}')` }} />
+        {isComingSoon && (
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-2xl">
+            <div className="text-center">
+              <p className="text-white text-2xl font-serif font-semibold">Coming Soon</p>
+            </div>
+          </div>
+        )}
+        <div className="p-6">
+          <div className="flex items-center gap-3 mb-3">
+            {getIcon(card.icon, `w-6 h-6 text-${card.icon_color.split('-')[0]}-${card.icon_color.split('-')[1]}`)}
+            <h3 className="text-2xl font-serif text-stone-800">{card.title}</h3>
+          </div>
+          <p className="text-stone-600 mb-6 leading-relaxed">
+            {card.description}
+          </p>
+
+          {hasAdditionalLinks ? (
+            <div className="space-y-2">
+              {card.additional_links!.map((link, linkIndex) => (
+                <div key={linkIndex}>
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`text-${card.icon_color.split('-')[0]}-${card.icon_color.split('-')[1]} font-semibold hover:opacity-80 transition-colors inline-flex items-center gap-2 group text-sm`}
+                  >
+                    {link.text}
+                    <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                  </a>
+                </div>
+              ))}
+            </div>
+          ) : card.button_action === 'link' && card.button_url ? (
+            <a
+              href={card.button_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`text-${card.icon_color.split('-')[0]}-${card.icon_color.split('-')[1]} font-semibold hover:opacity-80 transition-colors inline-flex items-center gap-2 group`}
+            >
+              {card.button_text || 'Learn More'}
+              <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+            </a>
+          ) : card.button_action === 'disabled' ? (
+            <button
+              disabled
+              className="text-stone-400 font-semibold cursor-not-allowed inline-flex items-center gap-2 group"
+            >
+              {card.button_text || 'Coming Soon'}
+              <span className="transform">→</span>
+            </button>
+          ) : (
+            <button
+              onClick={() => handleCardClick(card)}
+              className={`text-${card.icon_color.split('-')[0]}-${card.icon_color.split('-')[1]} font-semibold hover:opacity-80 transition-colors inline-flex items-center gap-2 group`}
+            >
+              {card.button_text || 'View'}
+              <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+            </button>
+          )}
+        </div>
+      </>
+    );
+
+    if (isFeatured) {
+      return (
+        <div key={card.id} className="group relative bg-white rounded-2xl overflow-hidden transform hover:-translate-y-1 md:col-span-1 lg:md:col-span-1">
+          <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-lg -z-10`} />
+          <div className="relative shadow-lg group-hover:shadow-2xl transition-all duration-300 bg-white rounded-2xl overflow-hidden h-full border-2 border-rose-300">
+            {cardContent}
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div
+        key={card.id}
+        className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1 relative"
+      >
+        {cardContent}
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-stone-50">
       <HeroCarousel slides={heroSlides} onExploreClick={scrollToOffers} />
@@ -137,7 +272,7 @@ function App() {
               onClick={handleDownloadMap}
               className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl px-8 py-3 transition-all duration-300 transform hover:scale-105 shadow-md inline-flex items-center gap-2"
             >
-              <Download className="w-5 h-5" />
+              <LucideIcons.Download className="w-5 h-5" />
               Download Trail Map
             </button>
           </div>
@@ -154,7 +289,7 @@ function App() {
             className="absolute top-6 right-6 text-white hover:text-emerald-400 transition-colors z-10"
             aria-label="Close fullscreen"
           >
-            <X className="w-10 h-10" />
+            <LucideIcons.X className="w-10 h-10" />
           </button>
           <img
             src={mapUrl}
@@ -177,8 +312,6 @@ function App() {
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
               className="flex-1 px-6 py-3 rounded-xl border-2 border-emerald-200 focus:border-emerald-500 focus:outline-none transition-colors"
@@ -210,264 +343,21 @@ function App() {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="group relative bg-white rounded-2xl overflow-hidden transform hover:-translate-y-1 md:col-span-1 lg:md:col-span-1">
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-rose-200 to-pink-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-lg -z-10"></div>
-              <div className="relative shadow-lg group-hover:shadow-2xl transition-all duration-300 bg-white rounded-2xl overflow-hidden h-full border-2 border-rose-300">
-                <div className="absolute top-4 right-4 bg-gradient-to-r from-rose-600 to-pink-600 text-white px-4 py-1 rounded-full text-sm font-semibold">Featured</div>
-                <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/3657100/pexels-photo-3657100.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
-                <div className="p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <Heart className="w-6 h-6 text-rose-600" />
-                    <h3 className="text-2xl font-serif text-stone-800">Date Night Package</h3>
-                  </div>
-                  <p className="text-stone-600 mb-6 leading-relaxed">
-                    Enjoy a beautiful time with your partner and get to know each other better.
-                  </p>
-                  <button
-                    onClick={() => setShowDateNightModal(true)}
-                    className="text-rose-600 font-semibold hover:text-rose-700 transition-colors inline-flex items-center gap-2 group"
-                  >
-                    View Package
-                    <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://bentlys.co.za/wp-content/uploads/2025/10/IMG_3786.webp?auto=compress&cs=tinysrgb&w=800')` }} />
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <Mountain className="w-6 h-6 text-emerald-600" />
-                  <h3 className="text-2xl font-serif text-stone-800">Walking Trail</h3>
-                </div>
-                <p className="text-stone-600 mb-6 leading-relaxed">
-                  Reconnect with nature at Bentlys, where trails wind through the Dinokeng bush.
-                </p>
-                <button
-                  onClick={() => setIsMapFullscreen(true)}
-                  className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group"
-                >
-                  Explore Trail
-                  <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-                </button>
-              </div>
-            </div>
-
-            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://bentlys.co.za/wp-content/uploads/2025/10/IMG_1192-scaled-e1760778646176.webp?auto=compress&cs=tinysrgb&w=800')` }} />
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <ShoppingBag className="w-6 h-6 text-emerald-600" />
-                  <h3 className="text-2xl font-serif text-stone-800">On-Site Store</h3>
-                </div>
-                <p className="text-stone-600 mb-6 leading-relaxed">
-                  Shop local produce, souvenirs, and everyday essentials without leaving the property.
-                </p>
-                <a
-                  href="https://wa.me/c/27814121666"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group"
-                >
-                  Shop Now
-                  <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-                </a>
-              </div>
-            </div>
-
-            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://lionandcheetahsanctuary.co.za/wp-content/uploads/2015/09/DSCN7449.jpg?auto=compress&cs=tinysrgb&w=800')` }} />
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <Map className="w-6 h-6 text-emerald-600" />
-                  <h3 className="text-2xl font-serif text-stone-800">Nearby Activities</h3>
-                </div>
-                <p className="text-stone-600 mb-6 leading-relaxed">
-                  Explore guided game drives, adventure spots, and must-see local experiences.
-                </p>
-                <a
-                  href="https://nearbybentlys.netlify.app"
-                  rel="noopener noreferrer"
-                  className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group"
-                >
-                  See Activities
-                  <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-                </a>
-              </div>
-            </div>
-
-            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://images.pexels.com/photos/2097090/pexels-photo-2097090.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <UtensilsCrossed className="w-6 h-6 text-emerald-600" />
-                  <h3 className="text-2xl font-serif text-stone-800">Places with Restaurants</h3>
-                </div>
-                <p className="text-stone-600 mb-6 leading-relaxed">
-                  Discover nearby restaurants in Dinokeng Reserve. Please call to book or confirm if they do walk-ins.
-                </p>
-                <a
-                  href="https://www.dinokengreserve.co.za/dinner-bed-breakfast/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group"
-                >
-                  Explore Dining
-                  <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-                </a>
-              </div>
-            </div>
-
-            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://storage.googleapis.com/cards_dinokeng/marketing-to-attract-grocery-stores_resize_b45a1fb8f9f0ff146ef27e828cb662f6.jpg?auto=compress&cs=tinysrgb&w=800')` }} />
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <ShoppingBag className="w-6 h-6 text-emerald-600" />
-                  <h3 className="text-2xl font-serif text-stone-800">Shops Nearby</h3>
-                </div>
-                <p className="text-stone-600 mb-6 leading-relaxed">
-                  Pop by nearby shops and pop-up venues in Dinokeng. Explore local retail and unique finds.
-                </p>
-                <div className="space-y-2">
-                  <a
-                    href="https://maps.app.goo.gl/EGR8oSUoXQUd1oWc8"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group text-sm"
-                  >
-                    Shop 1
-                    <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-                  </a>
-                  <br />
-                  <a
-                    href="https://maps.app.goo.gl/BCMWbv6Hyo8PeWPz7"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group text-sm"
-                  >
-                    Shop 2
-                    <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-                  </a>
-                  <br />
-                  <a
-                    href="https://maps.app.goo.gl/YT6f53ojahoZZiGK6"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group text-sm"
-                  >
-                    Shop 3
-                    <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1 relative">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://storage.googleapis.com/cards_dinokeng/899660820_EmmaGatland174122.e626b57af8d0249abe2c13ebf18438c0.jpg?auto=compress&cs=tinysrgb&w=800')` }} />
-              <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-2xl">
-                <div className="text-center">
-                  <p className="text-white text-2xl font-serif font-semibold">Coming Soon</p>
-                </div>
-              </div>
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <Bike className="w-6 h-6 text-emerald-600" />
-                  <h3 className="text-2xl font-serif text-stone-800">Bike Rentals</h3>
-                </div>
-                <p className="text-stone-600 mb-6 leading-relaxed">
-                  Explore the trails on two wheels with our premium bike rental service.
-                </p>
-                <button
-                  disabled
-                  className="text-stone-400 font-semibold cursor-not-allowed inline-flex items-center gap-2 group"
-                >
-                  Coming Soon
-                  <span className="transform">→</span>
-                </button>
-              </div>
-            </div>
-
-            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1 relative">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://bentlys.co.za/wp-content/uploads/2024/01/WhatsApp-Image-2024-01-22-at-19.52.10.jpeg?auto=compress&cs=tinysrgb&w=800')` }} />
-              <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-2xl">
-                <div className="text-center">
-                  <p className="text-white text-2xl font-serif font-semibold">Coming Soon</p>
-                </div>
-              </div>
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <UtensilsCrossed className="w-6 h-6 text-emerald-600" />
-                  <h3 className="text-2xl font-serif text-stone-800">Picnic Packages</h3>
-                </div>
-                <p className="text-stone-600 mb-6 leading-relaxed">
-                  Enjoy ready-made picnic setups with local snacks, drinks, and scenic spots to relax.
-                </p>
-                <button
-                  disabled
-                  className="text-stone-400 font-semibold cursor-not-allowed inline-flex items-center gap-2 group"
-                >
-                  Coming Soon
-                  <span className="transform">→</span>
-                </button>
-              </div>
-            </div>
-
-            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://storage.googleapis.com/cards_dinokeng/campfire-closeup.webp?auto=compress&cs=tinysrgb&w=800')` }} />
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <Flame className="w-6 h-6 text-amber-600" />
-                  <h3 className="text-2xl font-serif text-stone-800">Premium Firewood</h3>
-                </div>
-                <p className="text-stone-600 mb-6 leading-relaxed">
-                  Keep your fire burning bright with our premium, ready-to-burn firewood. Perfect for cozy nights.
-                </p>
-                <button
-                  onClick={() => setShowFirewoodNotice(true)}
-                  className="text-amber-600 font-semibold hover:text-amber-700 transition-colors inline-flex items-center gap-2 group"
-                >
-                  Order Now
-                  <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-                </button>
-              </div>
-            </div>
-
-            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
-              <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url('https://bentlys.co.za/wp-content/uploads/2025/10/IMG_2293.webp?auto=compress&cs=tinysrgb&w=800')` }} />
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <Sparkles className="w-6 h-6 text-emerald-600" />
-                  <h3 className="text-2xl font-serif text-stone-800">Mobile SPA</h3>
-                </div>
-                <p className="text-stone-600 mb-6 leading-relaxed">
-                  Unwind with a professional spa treatment brought right to your cabin or deck.
-                </p>
-                <a
-                  href="https://wa.me/27769307944?text=I%20have%20booked%20at%20Bentlys%20and%20I%20would%20like%20your%20services."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors inline-flex items-center gap-2 group"
-                >
-                  Book Now
-                  <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-                </a>
-              </div>
-            </div>
+            {cards.map((card, index) => renderCard(card, index))}
           </div>
         </div>
       </section>
 
-      {showFirewoodNotice && (
+      {showFirewoodModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8 md:p-4 bg-black/60 backdrop-blur-sm animate-modalFadeIn">
           <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[85vh] md:max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-gradient-to-r from-amber-600 to-orange-600 border-b border-amber-700 px-8 py-6 flex justify-between items-center rounded-t-3xl">
               <h2 className="text-3xl font-serif text-white">Order Your Firewood Today!</h2>
               <button
-                onClick={() => setShowFirewoodNotice(false)}
+                onClick={() => setShowFirewoodModal(false)}
                 className="p-2 hover:bg-white/20 rounded-full transition-colors"
               >
-                <X className="w-6 h-6 text-white" />
+                <LucideIcons.X className="w-6 h-6 text-white" />
               </button>
             </div>
 
@@ -515,7 +405,7 @@ function App() {
 
               <div className="flex gap-4 pt-4 border-t border-stone-200">
                 <button
-                  onClick={() => setShowFirewoodNotice(false)}
+                  onClick={() => setShowFirewoodModal(false)}
                   className="flex-1 bg-stone-200 hover:bg-stone-300 text-stone-800 font-semibold rounded-xl px-6 py-3 transition-all duration-300"
                 >
                   Maybe Later
@@ -543,7 +433,7 @@ function App() {
                 onClick={() => setShowDateNightModal(false)}
                 className="p-2 hover:bg-white/20 rounded-full transition-colors"
               >
-                <X className="w-6 h-6 text-white" />
+                <LucideIcons.X className="w-6 h-6 text-white" />
               </button>
             </div>
 
@@ -604,164 +494,6 @@ function App() {
                 >
                   Order Now on WhatsApp
                 </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showPicnicModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b border-stone-200 px-8 py-6 flex justify-between items-center rounded-t-3xl">
-              <h2 className="text-3xl font-serif text-stone-800">Picnic Packages</h2>
-              <button
-                onClick={() => setShowPicnicModal(false)}
-                className="p-2 hover:bg-stone-100 rounded-full transition-colors"
-              >
-                <X className="w-6 h-6 text-stone-600" />
-              </button>
-            </div>
-
-            <div className="p-8 space-y-6">
-              <div className="bg-emerald-50 rounded-2xl p-6 border-2 border-emerald-200">
-                <h3 className="text-2xl font-serif text-stone-800 mb-2">Standard Picnic Package</h3>
-                <p className="text-lg font-semibold text-emerald-600 mb-4">R450 per couple</p>
-                <ul className="space-y-2 text-stone-600">
-                  <li className="flex items-start gap-2">
-                    <span className="text-emerald-600 mt-1">•</span>
-                    <span>Picnic blanket and cushions</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-emerald-600 mt-1">•</span>
-                    <span>Selection of artisan sandwiches</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-emerald-600 mt-1">•</span>
-                    <span>Fresh fruit platter</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-emerald-600 mt-1">•</span>
-                    <span>Bottled water and juice</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-emerald-600 mt-1">•</span>
-                    <span>Sweet treats (cookies or brownies)</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-amber-50 rounded-2xl p-6 border-2 border-amber-200">
-                <h3 className="text-2xl font-serif text-stone-800 mb-2">Deluxe Picnic Package</h3>
-                <p className="text-lg font-semibold text-amber-600 mb-4">R750 per couple</p>
-                <ul className="space-y-2 text-stone-600">
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-600 mt-1">•</span>
-                    <span>Premium picnic setup with decorations</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-600 mt-1">•</span>
-                    <span>Gourmet cheese and charcuterie board</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-600 mt-1">•</span>
-                    <span>Artisan sandwiches and wraps</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-600 mt-1">•</span>
-                    <span>Fresh fruit and vegetable platter</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-600 mt-1">•</span>
-                    <span>Sparkling wine or champagne</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-600 mt-1">•</span>
-                    <span>Premium desserts</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-600 mt-1">•</span>
-                    <span>Personalized setup at your chosen scenic spot</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-stone-50 rounded-2xl p-6 border-2 border-stone-200">
-                <h3 className="text-2xl font-serif text-stone-800 mb-2">Romantic Sunset Package</h3>
-                <p className="text-lg font-semibold text-stone-600 mb-4">R950 per couple</p>
-                <ul className="space-y-2 text-stone-600">
-                  <li className="flex items-start gap-2">
-                    <span className="text-stone-600 mt-1">•</span>
-                    <span>Everything from the Deluxe Package</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-stone-600 mt-1">•</span>
-                    <span>Fairy lights and candles for ambiance</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-stone-600 mt-1">•</span>
-                    <span>Rose petals and romantic decorations</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-stone-600 mt-1">•</span>
-                    <span>Premium wine selection</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-stone-600 mt-1">•</span>
-                    <span>Bluetooth speaker for music</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-stone-600 mt-1">•</span>
-                    <span>Professional setup and cleanup service</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-violet-50 rounded-2xl p-6 border-2 border-violet-200">
-  <h3 className="text-2xl font-serif text-stone-800 mb-2">Painting Picnic Experience</h3>
-  <p className="text-lg font-semibold text-violet-600 mb-4">R850 per couple</p>
-  <ul className="space-y-2 text-stone-600">
-    <li className="flex items-start gap-2">
-      <span className="text-violet-600 mt-1">•</span>
-      <span>All-inclusive picnic setup with comfortable seating and shade</span>
-    </li>
-    <li className="flex items-start gap-2">
-      <span className="text-violet-600 mt-1">•</span>
-      <span>Canvas, paint, brushes, and easels provided</span>
-    </li>
-    <li className="flex items-start gap-2">
-      <span className="text-violet-600 mt-1">•</span>
-      <span>Light snacks and refreshments</span>
-    </li>
-    <li className="flex items-start gap-2">
-      <span className="text-violet-600 mt-1">•</span>
-      <span>Choice between guided or self-led painting session</span>
-    </li>
-    <li className="flex items-start gap-2">
-      <span className="text-violet-600 mt-1">•</span>
-      <span>Relaxed outdoor setting perfect for creativity and connection</span>
-    </li>
-    <li className="flex items-start gap-2">
-      <span className="text-violet-600 mt-1">•</span>
-      <span>Take home your finished artworks</span>
-    </li>
-  </ul>
-</div>
-
-              
-              <div className="bg-emerald-100 rounded-2xl p-6 text-center">
-                <p className="text-stone-600 mb-4">
-                  All packages require 24-hour advance booking
-                </p>
-                <a
-                  href="https://wa.me/27814121666?text=Hi!%20I%27m%20interested%20in%20one%20of%20your%20picnic%20packages.%20Could%20you%20please%20share%20more%20details%3F
-."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl px-8 py-3 transition-all duration-300 transform hover:scale-105 shadow-md"
-                >
-                  Book Your Picnic
-                </a>
               </div>
             </div>
           </div>
