@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { supabase, Banner, ExperienceCard, AdditionalLink } from '../lib/supabase';
-import { LogOut, Plus, Trash2, AlertCircle, Check, Upload, X as XIcon, Layers, LayoutGrid, GripVertical, Link, Eye, EyeOff } from 'lucide-react';
+import { supabase, Banner, ExperienceCard, AdditionalLink, SiteSetting } from '../lib/supabase';
+import { LogOut, Plus, Trash2, AlertCircle, Check, Upload, X as XIcon, Layers, LayoutGrid, GripVertical, Link, Eye, EyeOff, Settings, Map } from 'lucide-react';
 
 const ICON_OPTIONS = [
   'Mountain', 'ShoppingBag', 'Map', 'UtensilsCrossed', 'Sparkles', 'Bike', 'Heart', 'Flame', 'Coffee', 'TreePine', 'Tent', 'Compass'
@@ -27,9 +27,10 @@ const MODAL_TYPE_OPTIONS = [
 ];
 
 export function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState<'banners' | 'cards'>('banners');
+  const [activeTab, setActiveTab] = useState<'banners' | 'cards' | 'settings'>('banners');
   const [banners, setBanners] = useState<Banner[]>([]);
   const [cards, setCards] = useState<ExperienceCard[]>([]);
+  const [showWalkingTrail, setShowWalkingTrail] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -80,6 +81,7 @@ export function AdminDashboard() {
     }
     fetchBanners();
     fetchCards();
+    fetchSettings();
   }, [session, navigate]);
 
   const fetchBanners = async () => {
@@ -107,6 +109,40 @@ export function AdminDashboard() {
       setCards(data || []);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch cards');
+    }
+  };
+
+  const fetchSettings = async () => {
+    try {
+      const { data, error: fetchError } = await supabase
+        .from('site_settings')
+        .select('*')
+        .eq('setting_key', 'show_walking_trail')
+        .single();
+
+      if (fetchError && fetchError.code !== 'PGRST116') throw fetchError;
+      if (data) {
+        setShowWalkingTrail(data.setting_value === 'true');
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch settings');
+    }
+  };
+
+  const handleToggleWalkingTrail = async () => {
+    try {
+      const newValue = !showWalkingTrail;
+      const { error: updateError } = await supabase
+        .from('site_settings')
+        .update({ setting_value: String(newValue), updated_at: new Date().toISOString() })
+        .eq('setting_key', 'show_walking_trail');
+
+      if (updateError) throw updateError;
+      setShowWalkingTrail(newValue);
+      setSuccess(`Walking Trail section ${newValue ? 'enabled' : 'disabled'}`);
+      setTimeout(() => setSuccess(''), 3000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to update setting');
     }
   };
 
@@ -447,7 +483,7 @@ export function AdminDashboard() {
         )}
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-8">
+        <div className="flex gap-2 mb-8 flex-wrap">
           <button
             onClick={() => setActiveTab('banners')}
             className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition ${
@@ -469,6 +505,17 @@ export function AdminDashboard() {
           >
             <LayoutGrid className="w-5 h-5" />
             Experience Cards
+          </button>
+          <button
+            onClick={() => setActiveTab('settings')}
+            className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition ${
+              activeTab === 'settings'
+                ? 'bg-emerald-600 text-white'
+                : 'bg-white text-slate-700 hover:bg-slate-100'
+            }`}
+          >
+            <Settings className="w-5 h-5" />
+            Site Settings
           </button>
         </div>
 
@@ -1154,6 +1201,50 @@ export function AdminDashboard() {
                     ))}
                   </div>
                 )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Settings Tab */}
+        {activeTab === 'settings' && (
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-white rounded-lg shadow p-6">
+              <h2 className="text-lg font-semibold text-slate-900 mb-6">
+                Site Settings
+              </h2>
+
+              <div className="space-y-6">
+                {/* Walking Trail Section Toggle */}
+                <div className="flex items-center justify-between p-4 border border-slate-200 rounded-lg hover:border-slate-300 transition">
+                  <div className="flex items-center gap-4">
+                    <Map className={`w-8 h-8 ${showWalkingTrail ? 'text-emerald-600' : 'text-slate-400'}`} />
+                    <div>
+                      <h3 className="font-semibold text-slate-900">Walking, Running Trail Section</h3>
+                      <p className="text-sm text-slate-600">
+                        Toggle the visibility of the trail map section on the homepage
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={handleToggleWalkingTrail}
+                    className={`relative inline-flex h-7 w-14 items-center rounded-full transition-colors ${
+                      showWalkingTrail ? 'bg-emerald-600' : 'bg-slate-300'
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${
+                        showWalkingTrail ? 'translate-x-8' : 'translate-x-1'
+                      }`}
+                    />
+                  </button>
+                </div>
+
+                <div className="pt-4 border-t border-slate-200">
+                  <p className="text-sm text-slate-500">
+                    More site settings can be added here in the future.
+                  </p>
+                </div>
               </div>
             </div>
           </div>

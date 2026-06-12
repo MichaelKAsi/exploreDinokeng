@@ -20,6 +20,14 @@ export type AdditionalLink = {
   url: string;
 };
 
+export type SiteSetting = {
+  id: string;
+  setting_key: string;
+  setting_value: string;
+  created_at: string;
+  updated_at: string;
+};
+
 export type ExperienceCard = {
   id: string;
   title: string;

@@ -4,6 +4,10 @@ import { HeroCarousel } from './components/HeroCarousel';
 import { Footer } from './components/Footer';
 import { supabase, Banner, ExperienceCard } from './lib/supabase';
 
+type SiteSettings = {
+  show_walking_trail: boolean;
+};
+
 // Icon mapping helper
 const getIcon = (iconName: string, className?: string) => {
   const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -40,10 +44,12 @@ function App() {
   const [showDateNightModal, setShowDateNightModal] = useState(false);
   const [banners, setBanners] = useState<Banner[]>([]);
   const [cards, setCards] = useState<ExperienceCard[]>([]);
+  const [settings, setSettings] = useState<SiteSettings>({ show_walking_trail: true });
 
   useEffect(() => {
     fetchBanners();
     fetchCards();
+    fetchSettings();
   }, []);
 
   const fetchBanners = async () => {
@@ -74,6 +80,22 @@ function App() {
       }
     } catch (error) {
       console.error('Failed to fetch cards:', error);
+    }
+  };
+
+  const fetchSettings = async () => {
+    try {
+      const { data } = await supabase
+        .from('site_settings')
+        .select('*')
+        .eq('setting_key', 'show_walking_trail')
+        .single();
+
+      if (data) {
+        setSettings({ show_walking_trail: data.setting_value === 'true' });
+      }
+    } catch (error) {
+      console.error('Failed to fetch settings:', error);
     }
   };
 
@@ -243,42 +265,43 @@ function App() {
     <div className="min-h-screen bg-stone-50">
       <HeroCarousel slides={heroSlides} onExploreClick={scrollToOffers} />
 
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-serif text-stone-800 mb-4">
-              Our Walking, Running Trail
-            </h2>
-            <p className="text-xl text-stone-600 max-w-3xl mx-auto">
-              Say hi to our friendly wild and domestic family on the farm upclose and personal.
-            </p>
-          </div>
+      {settings.show_walking_trail && (
+        <section className="py-20 px-6 bg-white">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-serif text-stone-800 mb-4">
+                Our Walking, Running Trail
+              </h2>
+              <p className="text-xl text-stone-600 max-w-3xl mx-auto">
+                Say hi to our friendly wild and domestic family on the farm upclose and personal.
+              </p>
+            </div>
 
-          <div className="rounded-2xl overflow-hidden shadow-2xl cursor-pointer" onClick={() => setIsMapFullscreen(true)}>
-            <img
-              src={mapUrl}
-              alt="Walking Trail Map"
-              className="w-full h-auto transition-transform duration-300 hover:scale-105"
-            />
-          </div>
+            <div className="rounded-2xl overflow-hidden shadow-2xl cursor-pointer" onClick={() => setIsMapFullscreen(true)}>
+              <img
+                src={mapUrl}
+                alt="Walking Trail Map"
+                className="w-full h-auto transition-transform duration-300 hover:scale-105"
+              />
+            </div>
 
-          <div className="text-center mt-8">
-            <button
-              onClick={handleDownloadMap}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl px-8 py-3 transition-all duration-300 transform hover:scale-105 shadow-md inline-flex items-center gap-2"
-            >
-              <LucideIcons.Download className="w-5 h-5" />
-              Download Trail Map
-            </button>
+            <div className="text-center mt-8">
+              <button
+                onClick={handleDownloadMap}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl px-8 py-3 transition-all duration-300 transform hover:scale-105 shadow-md inline-flex items-center gap-2"
+              >
+                <LucideIcons.Download className="w-5 h-5" />
+                Download Trail Map
+              </button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {isMapFullscreen && (
+      {isMapFullscreen && settings.show_walking_trail && (
         <div
           className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 animate-fadeIn"
-          onClick={() => setIsMapFullscreen(false)}
-        >
+          onClick={() => setIsMapFullscreen(false)}>
           <button
             onClick={() => setIsMapFullscreen(false)}
             className="absolute top-6 right-6 text-white hover:text-emerald-400 transition-colors z-10"
